@@ -30,9 +30,11 @@ namespace Sanctum.Controllers
             Console.WriteLine(username + ": "  + password);
             var user = _db.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
             if (user == null)
+            {
                 return View(); // login failed
+            }
         
-            return RedirectToAction("Index"); // login succeeded
+            return RedirectToAction("Booking"); // login succeeded
         }
         
         public IActionResult Register()
@@ -43,14 +45,13 @@ namespace Sanctum.Controllers
         [HttpPost]
         public IActionResult Register(string username, string password)
         {
-            Console.WriteLine("$$$$$$$$$$$ | " + username + ": "   + password);
             var user = new User { Username = username, Password = password };
             _db.Users.Add(user);
             _db.SaveChanges();
             return RedirectToAction("Login");
         }
         
-        public IActionResult SignUp()
+        public IActionResult Booking()
         {
             return View();
         }
