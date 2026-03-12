@@ -1,4 +1,4 @@
-@{
+@* @{
     ViewData["Title"] = "Booking";
 }
 
@@ -20,4 +20,101 @@
         </div>
         <button type="submit">Confirm</button>
     </form>
+</div> *@
+
+@{
+    ViewData["Title"] = "Book a Room";
+}
+
+<div class="booking-page-container">
+    <section class="booking-hero">
+        <div>
+            <h1 class="booking-title">CSULB Room Booking</h1>
+            <p class="booking-subtitle">
+                Select a building, choose a date, and reserve an available room.
+            </p>
+        </div>
+    </section>
+
+    <section class="booking-dashboard">
+        <!-- LEFT: MAP -->
+        <div class="booking-widget map-widget">
+            <div class="widget-header">
+                <h2>Campus Map</h2>
+                <span id="selectedBuildingBadge" class="widget-badge">No building selected</span>
+            </div>
+
+            <div class="map-area">
+                <!-- CSULB MAP -->
+                <img src="https://via.placeholder.com/700x500?text=CSULB+Campus+Map" alt="CSULB Campus Map" class="campus-map-img" />
+
+                <!-- Sample clickable building buttons -->
+                <button class="building-pin" style="top: 18%; left: 30%;" data-building="ECS">ECS</button>
+                <button class="building-pin" style="top: 30%; left: 58%;" data-building="LIB">LIB</button>
+                <button class="building-pin" style="top: 52%; left: 40%;" data-building="USU">USU</button>
+                <button class="building-pin" style="top: 65%; left: 70%;" data-building="VEC">VEC</button>
+            </div>
+
+            <div class="building-info" id="buildingInfoBox">
+                <h3>Selected Building</h3>
+                <p id="buildingInfoText">Click a building on the map to begin.</p>
+            </div>
+        </div>
+
+        <!-- MIDDLE: CALENDAR -->
+        <div class="booking-widget calendar-widget">
+            <div class="widget-header">
+                <h2>Select a Date</h2>
+            </div>
+
+            <div class="calendar-topbar">
+                <button id="prevMonthBtn" class="calendar-nav-btn">&lt;</button>
+                <h3 id="calendarMonthYear"></h3>
+                <button id="nextMonthBtn" class="calendar-nav-btn">&gt;</button>
+            </div>
+
+            <div class="calendar-grid calendar-days">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+
+            <div id="calendarDates" class="calendar-grid calendar-dates"></div>
+        </div>
+
+        <!-- RIGHT: TIMES + SUMMARY -->
+        <div class="booking-widget times-widget">
+            <div class="widget-header">
+                <h2>Available Times</h2>
+            </div>
+
+            <div id="timeSlots" class="time-slots">
+                <p class="placeholder-text">Choose a building and date to see available times.</p>
+            </div>
+
+            <div class="booking-summary-card">
+                <h3>Booking Summary</h3>
+                <div class="summary-row">
+                    <span>Building</span>
+                    <strong id="summaryBuilding">—</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Date</span>
+                    <strong id="summaryDate">—</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Time</span>
+                    <strong id="summaryTime">—</strong>
+                </div>
+
+                <button id="confirmBookingBtn" class="confirm-booking-btn" disabled>
+                    Confirm Booking
+                </button>
+            </div>
+        </div>
+    </section>
 </div>
