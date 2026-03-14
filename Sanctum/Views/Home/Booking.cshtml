@@ -7,7 +7,7 @@
         <div>
             <h1 class="booking-title">CSULB Room Booking</h1>
             <p class="booking-subtitle">
-                Select a building, choose a date, and reserve an available room.
+                Select a building, choose a room, pick a date, and reserve an available time.
             </p>
         </div>
     </section>
@@ -21,23 +21,32 @@
             </div>
 
             <div class="map-area">
-                <!-- CSULB MAP -->
                 <img src="https://via.placeholder.com/700x500?text=CSULB+Campus+Map" alt="CSULB Campus Map" class="campus-map-img" />
 
-                <!-- Sample clickable building buttons -->
                 <button class="building-pin" style="top: 18%; left: 30%;" data-building="ECS">ECS</button>
                 <button class="building-pin" style="top: 30%; left: 58%;" data-building="LIB">LIB</button>
                 <button class="building-pin" style="top: 52%; left: 40%;" data-building="USU">USU</button>
                 <button class="building-pin" style="top: 65%; left: 70%;" data-building="VEC">VEC</button>
             </div>
 
-            <div class="building-info" id="buildingInfoBox">
+            @* <div class="building-info" id="buildingInfoBox">
                 <h3>Selected Building</h3>
                 <p id="buildingInfoText">Click a building on the map to begin.</p>
+            </div> *@
+        </div>
+
+        <!-- NEW: ROOMS -->
+        <div class="booking-widget rooms-widget">
+            <div class="widget-header">
+                <h2>Select a Room</h2>
+            </div>
+
+            <div id="roomList" class="room-list">
+                <p class="placeholder-text">Choose a building first to view available rooms.</p>
             </div>
         </div>
 
-        <!-- MIDDLE: CALENDAR -->
+        <!-- CALENDAR -->
         <div class="booking-widget calendar-widget">
             <div class="widget-header">
                 <h2>Select a Date</h2>
@@ -62,14 +71,14 @@
             <div id="calendarDates" class="calendar-grid calendar-dates"></div>
         </div>
 
-        <!-- RIGHT: TIMES + SUMMARY -->
+        <!-- TIMES + SUMMARY -->
         <div class="booking-widget times-widget">
             <div class="widget-header">
                 <h2>Available Times</h2>
             </div>
 
             <div id="timeSlots" class="time-slots">
-                <p class="placeholder-text">Choose a building and date to see available times.</p>
+                <p class="placeholder-text">Choose a building, room, and date to see available times.</p>
             </div>
 
             <div class="booking-summary-card">
@@ -77,6 +86,10 @@
                 <div class="summary-row">
                     <span>Building</span>
                     <strong id="summaryBuilding">—</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Room</span>
+                    <strong id="summaryRoom">—</strong>
                 </div>
                 <div class="summary-row">
                     <span>Date</span>
