@@ -278,6 +278,12 @@ body {
     outline: 2px solid #eb9900;
 }
 
+.calendar-cell.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 /* time slots */
 .time-slots {
     display: grid;

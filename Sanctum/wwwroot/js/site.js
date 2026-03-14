@@ -34,48 +34,54 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     function renderCalendar() {
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
 
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-        const monthName = currentDate.toLocaleString("default", { month: "long" });
-        monthYearLabel.textContent = `${monthName} ${year}`;
+    const monthName = currentDate.toLocaleString("default", { month: "long" });
+    monthYearLabel.textContent = `${monthName} ${year}`;
 
-        calendarDates.innerHTML = "";
+    calendarDates.innerHTML = "";
 
-        for (let i = 0; i < firstDay; i++) {
-            const emptyCell = document.createElement("div");
-            emptyCell.classList.add("calendar-cell", "empty");
-            calendarDates.appendChild(emptyCell);
+    for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement("div");
+        emptyCell.classList.add("calendar-cell", "empty");
+        calendarDates.appendChild(emptyCell);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement("div");
+        cell.classList.add("calendar-cell");
+        cell.textContent = day;
+
+        const cellDate = new Date(year, month, day);
+        const today = new Date();
+
+        today.setHours(0, 0, 0, 0);
+        cellDate.setHours(0, 0, 0, 0);
+
+        if (
+            cellDate.getDate() === today.getDate() &&
+            cellDate.getMonth() === today.getMonth() &&
+            cellDate.getFullYear() === today.getFullYear()
+        ) {
+            cell.classList.add("today");
         }
 
-        for (let day = 1; day <= daysInMonth; day++) {
-            const cell = document.createElement("div");
-            cell.classList.add("calendar-cell");
-            cell.textContent = day;
+        if (
+            selectedDate &&
+            cellDate.getDate() === selectedDate.getDate() &&
+            cellDate.getMonth() === selectedDate.getMonth() &&
+            cellDate.getFullYear() === selectedDate.getFullYear()
+        ) {
+            cell.classList.add("selected");
+        }
 
-            const cellDate = new Date(year, month, day);
-            const today = new Date();
-
-            if (
-                cellDate.getDate() === today.getDate() &&
-                cellDate.getMonth() === today.getMonth() &&
-                cellDate.getFullYear() === today.getFullYear()
-            ) {
-                cell.classList.add("today");
-            }
-
-            if (
-                selectedDate &&
-                cellDate.getDate() === selectedDate.getDate() &&
-                cellDate.getMonth() === selectedDate.getMonth() &&
-                cellDate.getFullYear() === selectedDate.getFullYear()
-            ) {
-                cell.classList.add("selected");
-            }
-
+        if (cellDate < today) {
+            cell.classList.add("disabled");
+        } else {
             cell.addEventListener("click", function () {
                 selectedDate = cellDate;
                 selectedTime = null;
@@ -83,10 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 renderTimeSlots();
                 updateSummary();
             });
-
-            calendarDates.appendChild(cell);
         }
+
+        calendarDates.appendChild(cell);
     }
+}
 
     function renderTimeSlots() {
         timeSlotsContainer.innerHTML = "";
