@@ -50,11 +50,24 @@ namespace Sanctum.Controllers
             _db.SaveChanges();
             return RedirectToAction("Login");
         }
-        
+
         public IActionResult Booking()
         {
+            var book = new Booking();
+            book.StartTime = DateTime.Now;
+            book.EndTime = book.StartTime;
+            bool time = true;
+
+            var result = book.EndTime - book.StartTime;
+
+            if (time)
+            {
+                Console.WriteLine(result);
+            }
+
             return View();
         }
+
 
 
         public IActionResult Privacy()
