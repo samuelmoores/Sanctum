@@ -24,12 +24,19 @@
     let selectedDate = null;
     let selectedTime = null;
 
-    const mockRooms = {
-        ECS: ["ECS-201", "ECS-202", "ECS-301"],
-        LIB: ["LIB-101", "LIB-203", "LIB-305"],
-        USU: ["USU-110", "USU-210"],
-        VEC: ["VEC-17", "VEC-18", "VEC-19"]
-    };
+    let rooms = {};
+
+    async function loadRooms() {
+        try {
+            const response = await fetch('/Room/GetRooms');
+            console.log('Response status:', response.status);
+            const data = await response.json();
+            console.log('Rooms data:', data);
+            rooms = data;
+        } catch (error) {
+            console.error('Failed to load rooms:', error);
+        }
+    }
 
     const mockAvailability = {
         "ECS-201": ["8:00 AM", "9:00 AM", "10:00 AM", "1:00 PM", "2:00 PM"],
@@ -56,9 +63,9 @@
             return;
         }
 
-        const rooms = mockRooms[selectedBuilding] || [];
+        const buildingRooms = rooms[selectedBuilding] || [];
 
-        rooms.forEach(room => {
+        buildingRooms.forEach(room => {
             const btn = document.createElement("button");
             btn.classList.add("room-btn");
             btn.textContent = room;
@@ -221,8 +228,14 @@
         }
     });
 
-    renderRooms();
-    renderCalendar();
-    renderTimeSlots();
-    updateSummary();
+    async function init() {
+        console.log('init called');
+        await loadRooms();
+        renderRooms();
+        renderCalendar();
+        renderTimeSlots();
+        updateSummary();
+    }
+
+    init();
 });
