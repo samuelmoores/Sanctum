@@ -1,7 +1,7 @@
 html, body {
     height: 100%;
     margin: 0;
-    font-family: Verdana, Geneva, sans-serif;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
 body {
@@ -33,7 +33,7 @@ main {
 /* subtitle */
 .subtitle {
     font-size: 24px;
-    color: #eb9900;
+    color: #eba91b;
     margin-bottom: 50px;
 }
 
@@ -83,7 +83,7 @@ main {
 
 .booking-subtitle {
     font-size: clamp(1rem, 1.5vw, 18px);
-    color: #6b7280;
+    color: #eba91b;
     margin-bottom: 30px;
     text-align: center;
 }
@@ -136,14 +136,13 @@ main {
 .map-area {
     position: relative;
     width: 100%;
-    aspect-ratio: 7 / 5;
+    flex-grow: 1;
     min-height: 280px;
-    max-height: 500px;
     border-radius: 20px;
     overflow: hidden;
     background: #dbe3ee;
     box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.08);
-    margin-bottom: 18px;
+    margin-bottom: 0;
 }
 
 .campus-map-img {
@@ -158,16 +157,19 @@ main {
     position: absolute;
     transform: translate(-50%, -50%);
     border: none;
-    border-radius: 999px;
-    padding: 10px 14px;
+    width: 38px;
+    height: 28px;
+    border-radius: 50%;
     background: linear-gradient(145deg, #ffffff, #e9eef6);
     color: #111827;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
     transition: 0.2s ease;
-    white-space: nowrap;
 }
 
 .building-pin:hover {
@@ -175,7 +177,7 @@ main {
 }
 
 .building-pin.active {
-    background: linear-gradient(145deg, #ffd56a, #eb9900);
+    background: linear-gradient(145deg, #ffd56a, #eba91b);
     color: #111827;
 }
 
@@ -225,9 +227,9 @@ main {
 }
 
 .room-btn.selected {
-    background: #1b6ec2;
-    color: white;
-    border-color: #1b6ec2;
+    background: linear-gradient(145deg, #ffd56a, #eba91b);
+    color: black;
+    border-color: #eba91b;
 }
 
 /* calendar */
@@ -305,7 +307,7 @@ main {
 }
 
 .calendar-dates .calendar-cell.selected {
-    background: linear-gradient(145deg, #cfe0ff, #9ec5fe);
+    background: linear-gradient(145deg, #ffd56a, #eba91b);
     color: #111827;
     border: 1px solid rgba(59, 130, 246, 0.3);
 }
@@ -347,7 +349,7 @@ main {
 }
 
 .time-slot-btn.selected {
-    background: linear-gradient(145deg, #ffd56a, #eb9900);
+    background: linear-gradient(145deg, #ffd56a, #eba91b);
     color: #111827;
 }
 
