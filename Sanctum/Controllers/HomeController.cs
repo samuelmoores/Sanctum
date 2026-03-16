@@ -2,6 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Sanctum.Models;
 using System.Diagnostics;
 using Sanctum.Data;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+
+using System.Reflection.Metadata.Ecma335;
 
 namespace Sanctum.Controllers
 {
@@ -36,6 +41,51 @@ namespace Sanctum.Controllers
         
             return RedirectToAction("Booking"); // login succeeded
         }
+
+        // Google Authentication Methods (3)
+        [HttpPost]
+        public IActionResult ExternalLogin(string provider, string returnUrl = "/")
+        {
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Home", new { returnUrl });
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+            return Challenge(properties, provider);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = "/", string? remoteError = null)
+        {
+            if (remoteError != null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            if (!result.Succeeded)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            var email = result.Principal.FindFirstValue(ClaimTypes.Email);
+            var name = result.Principal.FindFirstValue(ClaimTypes.Name);
+
+            return RedirectToAction("Booking");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
+
+
+
+
         
         public IActionResult Register()
         {
