@@ -19,14 +19,34 @@ namespace Sanctum.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        public IActionResult Describe() 
         {
+            var des = new User();
+            Console.Write("Add Description: ");
+            des.Description = Console.ReadLine();
+            Console.WriteLine($"Description@{des.Description}");
             return View();
         }
-        
-        public IActionResult Login()
+
+        public IActionResult ID() 
         {
+            var id = new User();
+            Console.Write("Add CSULB ID: ");
+            string idNum = id.CSULBID.ToString();
+            idNum = Console.ReadLine();
+            Console.WriteLine($"CSULB ID: @{id.CSULBID}");
             return View();
+        }
+
+  
+        [HttpPost]
+        public IActionResult Profile()
+        {
+            ViewData["Title"] = "Profile";
+            Console.WriteLine(Describe());
+            Console.WriteLine(ID());
+
+            return RedirectToAction("Booking", "Profile");
         }
         
         [HttpPost]
