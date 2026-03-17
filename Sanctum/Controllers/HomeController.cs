@@ -19,6 +19,11 @@ namespace Sanctum.Controllers
             _db = db;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public IActionResult Describe() 
         {
             var des = new User();
@@ -48,7 +53,12 @@ namespace Sanctum.Controllers
 
             return RedirectToAction("Booking", "Profile");
         }
-        
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
