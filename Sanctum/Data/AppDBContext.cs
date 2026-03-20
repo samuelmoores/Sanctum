@@ -10,5 +10,17 @@ public class AppDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<Room> Rooms { get; set; }
-    
+
+    public DbSet<Room> Bookings { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Booking>()
+            .HasOne(u => u.User)
+            .WithMany(b => b.Bookings)
+            .HasForeignKey(b => b.UserID)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+
 }

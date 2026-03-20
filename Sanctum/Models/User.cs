@@ -7,4 +7,6 @@ public class User
     public string Password { get; set; }
     public string Description {  get; set; }
     public int CSULBID { get; set; }
+
+    public ICollection<Booking> Bookings { get; set; }
 }
