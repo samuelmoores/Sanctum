@@ -9,23 +9,23 @@
     <link rel="stylesheet" href="~/Sanctum.styles.css" asp-append-version="true" />
 </head>
 <body>
-
-    <div class="container-fluid mt-3 px-4">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Sanctum
+    <div class="page-wrapper">
+        <div class="container-fluid px-4 content-wrapper">
+            <main role="main" class="pb-4">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
+
+        <footer class="footer text-muted">
+            <div class="container">
+                &copy; 2026 - Sanctum
+            </div>
+        </footer>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
 </html>

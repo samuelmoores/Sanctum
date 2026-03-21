@@ -1,26 +1,49 @@
 html, body {
     height: 100%;
     margin: 0;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 body {
-    background: linear-gradient(180deg, #f7f8fb 0%, #edf1f7 100%);
+    background: #f8f5ef;
     color: #1f2937;
+}
+
+.page-wrapper {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+}
+
+.content-wrapper {
+    flex: 1;
+    padding-bottom: 30px;
 }
 
 main {
     flex: 1;
 }
 
+/* remove the line above the footer */
+.border-top {
+    border-top: none !important;
+}
+
+.footer {
+    width: 100%;
+    line-height: 60px;
+    text-align: center;
+    background: #f8f5ef;
+    border-top: none !important;
+    margin-top: auto;
+}
+
 .home-container {
-    min-height: 100vh;
+    min-height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
@@ -60,12 +83,12 @@ main {
     width: 100%;
     max-width: 1800px;
     margin: 0 auto;
-    padding: 30px;
+    padding: 12px 24px 20px 24px;
     box-sizing: border-box;
 }
 
 .booking-hero {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -100,7 +123,7 @@ main {
 .booking-widget {
     background: linear-gradient(145deg, #ffffff, #f5f7fb);
     border-radius: 24px;
-    padding: 22px;
+    padding: 18px;
     box-shadow: 12px 12px 28px rgba(0,0,0,0.08),
                 -8px -8px 20px rgba(255,255,255,0.9);
     border: 1px solid rgba(255,255,255,0.8);
