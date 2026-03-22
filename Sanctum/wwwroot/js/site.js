@@ -8,6 +8,10 @@
     const profileMenuBtn = document.getElementById("profileMenuBtn");
     const profileDropdown = document.getElementById("profileDropdown");
 
+    const viewBookingsBtn = document.getElementById("viewBookingsBtn");
+    const bookingsModalOverlay = document.getElementById("bookingsModalOverlay");
+    const closeBookingsModalBtn = document.getElementById("closeBookingsModalBtn");
+
     // ===== CALENDAR ELEMENTS =====
     const monthYearLabel = document.getElementById("calendarMonthYear");
     const calendarDates = document.getElementById("calendarDates");
@@ -270,6 +274,24 @@
                 profileDropdown.classList.remove("show");
             }
         });
+    }
+
+    // ===== MY BOOKINGS MODAL =====
+    if (viewBookingsBtn && bookingsModalOverlay && closeBookingsModalBtn) {
+    viewBookingsBtn.addEventListener("click", function () {
+        bookingsModalOverlay.classList.add("show");
+        profileDropdown.classList.remove("show");
+    });
+
+    closeBookingsModalBtn.addEventListener("click", function () {
+        bookingsModalOverlay.classList.remove("show");
+    });
+
+    bookingsModalOverlay.addEventListener("click", function (e) {
+        if (e.target === bookingsModalOverlay) {
+            bookingsModalOverlay.classList.remove("show");
+        }
+    });
     }
 
     // ===== INIT FUNCTION =====

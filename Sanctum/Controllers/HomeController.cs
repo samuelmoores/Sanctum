@@ -172,20 +172,20 @@ namespace Sanctum.Controllers
 
         public IActionResult Booking()
         {
-            // temporary booking object (not connected to UI yet)
             var book = new Booking();
-
             book.StartTime = DateTime.Now;
             book.EndTime = book.StartTime;
 
             bool time = true;
-
             var result = book.EndTime - book.StartTime;
 
             if (time)
             {
                 Console.WriteLine(result);
             }
+
+            // gets the signed-in user's name from claims
+            ViewBag.UserName = User.FindFirst(ClaimTypes.Name)?.Value ?? "Student";
 
             return View();
         }
