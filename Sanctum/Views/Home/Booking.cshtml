@@ -4,11 +4,25 @@
 
 <div class="booking-page-container">
     <section class="booking-hero">
-        <div>
-            <h1 class="booking-title">CSULB Room Booking</h1>
-            <p class="booking-subtitle">
-                Select a building, choose a room, pick a date, and reserve an available time.
-            </p>
+        <div class="booking-hero-content">
+            <div class="booking-hero-text">
+                <h1 class="booking-title">CSULB Room Booking</h1>
+                <p class="booking-subtitle">
+                    Select a building, choose a room, pick a date, and reserve an available time.
+                </p>
+            </div>
+
+            <div class="profile-menu-wrapper">
+                <button id="profileMenuBtn" class="profile-menu-btn" type="button" aria-label="Profile menu">
+                    <span class="profile-icon-head"></span>
+                    <span class="profile-icon-body"></span>
+                </button>
+
+                <div id="profileDropdown" class="profile-dropdown">
+                    <a href="/Booking/MyBookings" class="profile-dropdown-item">View My Bookings</a>
+                    <a href="/" class="profile-dropdown-item">Sign Out</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -28,14 +42,9 @@
                 <button class="building-pin" style="top: 43%; left: 33%;" data-building="HC">HC</button>
                 <button class="building-pin" style="top: 97%; left: 47%;" data-building="SSSC">SSSC</button>
             </div>
-
-            @* <div class="building-info" id="buildingInfoBox">
-                <h3>Selected Building</h3>
-                <p id="buildingInfoText">Click a building on the map to begin.</p>
-            </div> *@
         </div>
 
-        <!-- NEW: ROOMS -->
+        <!-- ROOMS -->
         <div class="booking-widget rooms-widget">
             <div class="widget-header">
                 <h2>Select a Room</h2>

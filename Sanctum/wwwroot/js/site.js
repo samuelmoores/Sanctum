@@ -2,6 +2,9 @@
     const bookingPage = document.getElementById("calendarDates");
     if (!bookingPage) return;
 
+    const profileMenuBtn = document.getElementById("profileMenuBtn");
+    const profileDropdown = document.getElementById("profileDropdown");
+
     const monthYearLabel = document.getElementById("calendarMonthYear");
     const calendarDates = document.getElementById("calendarDates");
     const prevMonthBtn = document.getElementById("prevMonthBtn");
@@ -230,6 +233,19 @@
         }
     });
 
+    if (profileMenuBtn && profileDropdown) {
+    profileMenuBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        profileDropdown.classList.toggle("show");
+    });
+
+    document.addEventListener("click", function (e) {
+        if (!profileMenuBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+            profileDropdown.classList.remove("show");
+        }
+    });
+    }
+    
     async function init() {
         console.log('init called');
         await loadRooms();
