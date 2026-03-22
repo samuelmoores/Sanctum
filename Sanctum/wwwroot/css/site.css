@@ -1,3 +1,7 @@
+/* ===================================================== */
+/* GLOBAL PAGE LAYOUT */
+/* ===================================================== */
+
 html, body {
     height: 100%;
     margin: 0;
@@ -9,12 +13,14 @@ body {
     color: #1f2937;
 }
 
+/* wraps whole page so footer can stay at bottom */
 .page-wrapper {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
+/* main content area above footer */
 .content-wrapper {
     flex: 1;
     padding-bottom: 30px;
@@ -24,11 +30,12 @@ main {
     flex: 1;
 }
 
-/* remove the line above the footer */
+/* remove default bootstrap border line above footer */
 .border-top {
     border-top: none !important;
 }
 
+/* footer styling */
 .footer {
     width: 100%;
     line-height: 60px;
@@ -37,6 +44,11 @@ main {
     border-top: none !important;
     margin-top: auto;
 }
+
+
+/* ===================================================== */
+/* HOME PAGE */
+/* ===================================================== */
 
 .home-container {
     min-height: calc(100vh - 60px);
@@ -47,20 +59,20 @@ main {
     text-align: center;
 }
 
-/* Sanctum title */
+/* main Sanctum title */
 .main-title {
     font-size: 80px;
     margin-bottom: 10px;
 }
 
-/* subtitle */
+/* subtitle under Sanctum */
 .subtitle {
     font-size: 24px;
     color: #eba91b;
     margin-bottom: 50px;
 }
 
-/* buttons container */
+/* container for login / sign up buttons */
 .button-section {
     display: flex;
     gap: 40px;
@@ -68,15 +80,16 @@ main {
     flex-wrap: wrap;
 }
 
-/* big buttons */
+/* large buttons on home page */
 .big-btn {
     font-size: 24px;
     padding: 18px 50px;
     border-radius: 12px;
 }
 
+
 /* ===================================================== */
-/* BOOKING PAGE STYLES */
+/* BOOKING PAGE - GENERAL LAYOUT */
 /* ===================================================== */
 
 .booking-page-container {
@@ -87,10 +100,12 @@ main {
     box-sizing: border-box;
 }
 
+/* hero section above widgets */
 .booking-hero {
     margin-bottom: 12px;
 }
 
+/* hero layout: centered title text + profile icon on right */
 .booking-hero-content {
     display: flex;
     justify-content: space-between;
@@ -98,17 +113,20 @@ main {
     gap: 20px;
 }
 
+/* text area in hero */
 .booking-hero-text {
     flex: 1;
     text-align: center;
 }
 
+/* booking page title */
 .booking-title {
     font-size: clamp(2rem, 3vw, 42px);
     margin-bottom: 8px;
     text-align: center;
 }
 
+/* booking page subtitle */
 .booking-subtitle {
     font-size: clamp(1rem, 1.5vw, 18px);
     color: #eba91b;
@@ -116,7 +134,7 @@ main {
     text-align: center;
 }
 
-/* 4 widget layout */
+/* 4 widget grid layout */
 .booking-dashboard {
     display: grid;
     grid-template-columns: 1.35fr 0.9fr 1fr 1fr;
@@ -124,7 +142,7 @@ main {
     align-items: stretch;
 }
 
-/* widgets */
+/* individual widget card styling */
 .booking-widget {
     background: linear-gradient(145deg, #ffffff, #f5f7fb);
     border-radius: 24px;
@@ -132,11 +150,11 @@ main {
     box-shadow: 12px 12px 28px rgba(0,0,0,0.08),
                 -8px -8px 20px rgba(255,255,255,0.9);
     border: 1px solid rgba(255,255,255,0.8);
-
     display: flex;
     flex-direction: column;
 }
 
+/* header row inside each widget */
 .widget-header {
     display: flex;
     justify-content: space-between;
@@ -146,11 +164,13 @@ main {
     flex-wrap: wrap;
 }
 
+/* widget titles like campus map / select room */
 .widget-header h2 {
     margin: 0;
     font-size: 24px;
 }
 
+/* badge showing selected building */
 .widget-badge {
     background: #eef2ff;
     color: #374151;
@@ -160,7 +180,12 @@ main {
     font-weight: bold;
 }
 
-/* map area */
+
+/* ===================================================== */
+/* MAP WIDGET */
+/* ===================================================== */
+
+/* map container */
 .map-area {
     position: relative;
     width: 100%;
@@ -173,6 +198,7 @@ main {
     margin-bottom: 0;
 }
 
+/* actual map image */
 .campus-map-img {
     width: 100%;
     height: 100%;
@@ -180,7 +206,7 @@ main {
     display: block;
 }
 
-/* building pins */
+/* clickable building pins on top of map */
 .building-pin {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -200,16 +226,18 @@ main {
     transition: 0.2s ease;
 }
 
+/* hover effect for building pins */
 .building-pin:hover {
     transform: translate(-50%, -50%) scale(1.05);
 }
 
+/* active/selected building pin */
 .building-pin.active {
     background: linear-gradient(145deg, #ffd56a, #eba91b);
     color: #111827;
 }
 
-/* building info */
+/* old building info box styling if reused later */
 .building-info {
     padding: 16px;
     border-radius: 18px;
@@ -230,13 +258,19 @@ main {
     font-size: 15px;
 }
 
-/* rooms */
+
+/* ===================================================== */
+/* ROOMS WIDGET */
+/* ===================================================== */
+
+/* list of rooms under selected building */
 .room-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
+/* each room button */
 .room-btn {
     width: 100%;
     padding: 12px 16px;
@@ -250,17 +284,24 @@ main {
     box-sizing: border-box;
 }
 
+/* hover state for room */
 .room-btn:hover {
     background: #f3f3f3;
 }
 
+/* selected room */
 .room-btn.selected {
     background: linear-gradient(145deg, #ffd56a, #eba91b);
     color: black;
     border-color: #eba91b;
 }
 
-/* calendar */
+
+/* ===================================================== */
+/* CALENDAR WIDGET */
+/* ===================================================== */
+
+/* top row with month/year + arrows */
 .calendar-topbar {
     display: flex;
     justify-content: space-between;
@@ -269,6 +310,7 @@ main {
     gap: 10px;
 }
 
+/* month + year label */
 .calendar-topbar h3 {
     margin: 0;
     font-size: 20px;
@@ -276,6 +318,7 @@ main {
     flex: 1;
 }
 
+/* prev / next month arrows */
 .calendar-nav-btn {
     border: none;
     width: 42px;
@@ -289,12 +332,14 @@ main {
     flex-shrink: 0;
 }
 
+/* shared calendar grid */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 10px;
 }
 
+/* weekday names row */
 .calendar-days {
     margin-bottom: 12px;
     text-align: center;
@@ -307,6 +352,7 @@ main {
     min-width: 0;
 }
 
+/* actual calendar day cell */
 .calendar-dates .calendar-cell {
     aspect-ratio: 1 / 1;
     min-height: 44px;
@@ -323,6 +369,7 @@ main {
     box-sizing: border-box;
 }
 
+/* empty spacing cells before month starts */
 .calendar-dates .calendar-cell.empty {
     background: transparent;
     border: none;
@@ -330,27 +377,36 @@ main {
     cursor: default;
 }
 
+/* hover effect for valid dates */
 .calendar-dates .calendar-cell:hover:not(.empty):not(.disabled) {
     transform: translateY(-2px);
 }
 
+/* selected date */
 .calendar-dates .calendar-cell.selected {
     background: linear-gradient(145deg, #ffd56a, #eba91b);
     color: #111827;
     border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
+/* highlight today */
 .calendar-dates .calendar-cell.today {
     outline: 2px solid #eb9900;
 }
 
+/* disabled dates */
 .calendar-cell.disabled {
     opacity: 0.35;
     pointer-events: none;
     cursor: not-allowed;
 }
 
-/* time slots */
+
+/* ===================================================== */
+/* TIME SLOTS WIDGET */
+/* ===================================================== */
+
+/* time slots grid */
 .time-slots {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -358,6 +414,7 @@ main {
     margin-bottom: 24px;
 }
 
+/* each time button */
 .time-slot-btn {
     border: none;
     border-radius: 16px;
@@ -372,22 +429,30 @@ main {
     box-sizing: border-box;
 }
 
+/* hover effect for times */
 .time-slot-btn:hover {
     transform: translateY(-2px);
 }
 
+/* selected time */
 .time-slot-btn.selected {
     background: linear-gradient(145deg, #ffd56a, #eba91b);
     color: #111827;
 }
 
+/* placeholder message inside widgets */
 .placeholder-text {
     grid-column: 1 / -1;
     color: #6b7280;
     margin: 0;
 }
 
-/* summary */
+
+/* ===================================================== */
+/* BOOKING SUMMARY */
+/* ===================================================== */
+
+/* bottom summary card inside times widget */
 .booking-summary-card {
     margin-top: auto;
     padding: 18px;
@@ -397,11 +462,13 @@ main {
     box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.8);
 }
 
+/* summary title */
 .booking-summary-card h3 {
     font-size: 18px;
     margin-bottom: 14px;
 }
 
+/* each row in summary card */
 .summary-row {
     display: flex;
     justify-content: space-between;
@@ -411,6 +478,7 @@ main {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* confirm booking button */
 .confirm-booking-btn {
     width: 100%;
     margin-top: 18px;
@@ -425,29 +493,114 @@ main {
     cursor: pointer;
 }
 
+/* hover effect when button is enabled */
 .confirm-booking-btn:hover:enabled {
     transform: translateY(-2px);
 }
 
+/* disabled state */
 .confirm-booking-btn:disabled {
     opacity: 0.45;
     cursor: not-allowed;
 }
 
-/* footer */
-.footer {
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
+
+/* ===================================================== */
+/* PROFILE MENU */
+/* ===================================================== */
+
+/* wrapper for icon + dropdown */
+.profile-menu-wrapper {
+    position: relative;
+    flex-shrink: 0;
 }
 
-/* responsive */
+/* round profile button */
+.profile-menu-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff, #f3f4f6);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* hover effect */
+.profile-menu-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* little head icon */
+.profile-icon-head {
+    position: absolute;
+    top: 12px;
+    width: 13px;
+    height: 13px;
+    background: #374151;
+    border-radius: 50%;
+}
+
+/* little body icon */
+.profile-icon-body {
+    position: absolute;
+    top: 26px;
+    width: 22px;
+    height: 10px;
+    background: #374151;
+    border-radius: 12px 12px 8px 8px;
+}
+
+/* hidden dropdown menu */
+.profile-dropdown {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    min-width: 180px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+    padding: 8px 0;
+    display: none;
+    z-index: 1000;
+}
+
+/* shown dropdown state */
+.profile-dropdown.show {
+    display: block;
+}
+
+/* each dropdown item */
+.profile-dropdown-item {
+    display: block;
+    padding: 12px 16px;
+    color: #1f2937;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+/* hover on dropdown item */
+.profile-dropdown-item:hover {
+    background: #f3f4f6;
+}
+
+
+/* ===================================================== */
+/* RESPONSIVE STYLES */
+/* ===================================================== */
+
+/* medium-large screens */
 @media (max-width: 1450px) {
     .booking-dashboard {
         grid-template-columns: repeat(2, minmax(280px, 1fr));
     }
 }
 
+/* tablets / smaller laptops */
 @media (max-width: 900px) {
     .booking-page-container {
         padding: 20px;
@@ -466,6 +619,7 @@ main {
     }
 }
 
+/* tablets / larger phones */
 @media (max-width: 768px) {
     .booking-title {
         font-size: 30px;
@@ -497,6 +651,7 @@ main {
     }
 }
 
+/* small phones */
 @media (max-width: 520px) {
     .booking-page-container {
         padding: 14px;
@@ -521,78 +676,4 @@ main {
         font-size: 12px;
         padding: 8px 10px;
     }
-}
-
-/* ===== PROFILE MENU ===== */
-
-.profile-menu-wrapper {
-    position: relative;
-    flex-shrink: 0;
-}
-
-.profile-menu-btn {
-    width: 50px;
-    height: 50px;
-    border: none;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #ffffff, #f3f4f6);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile-menu-btn:hover {
-    transform: translateY(-1px);
-}
-
-/* little person icon */
-.profile-icon-head {
-    position: absolute;
-    top: 12px;
-    width: 13px;
-    height: 13px;
-    background: #374151;
-    border-radius: 50%;
-}
-
-.profile-icon-body {
-    position: absolute;
-    top: 26px;
-    width: 22px;
-    height: 10px;
-    background: #374151;
-    border-radius: 12px 12px 8px 8px;
-}
-
-/* dropdown */
-.profile-dropdown {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    min-width: 180px;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
-    padding: 8px 0;
-    display: none;
-    z-index: 1000;
-}
-
-.profile-dropdown.show {
-    display: block;
-}
-
-.profile-dropdown-item {
-    display: block;
-    padding: 12px 16px;
-    color: #1f2937;
-    text-decoration: none;
-    font-size: 15px;
-}
-
-.profile-dropdown-item:hover {
-    background: #f3f4f6;
 }
