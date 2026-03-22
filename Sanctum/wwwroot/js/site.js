@@ -1,26 +1,35 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
+
+    // ===== PAGE GUARD (only run on booking page) =====
     const bookingPage = document.getElementById("calendarDates");
     if (!bookingPage) return;
 
+    // ===== PROFILE DROPDOWN =====
     const profileMenuBtn = document.getElementById("profileMenuBtn");
     const profileDropdown = document.getElementById("profileDropdown");
 
+    // ===== CALENDAR ELEMENTS =====
     const monthYearLabel = document.getElementById("calendarMonthYear");
     const calendarDates = document.getElementById("calendarDates");
     const prevMonthBtn = document.getElementById("prevMonthBtn");
     const nextMonthBtn = document.getElementById("nextMonthBtn");
+
+    // ===== MAP / BUILDING SELECTION =====
     const buildingPins = document.querySelectorAll(".building-pin");
     const selectedBuildingBadge = document.getElementById("selectedBuildingBadge");
-    // const buildingInfoText = document.getElementById("buildingInfoText");
+
+    // ===== ROOMS / TIMES / BUTTON =====
     const timeSlotsContainer = document.getElementById("timeSlots");
     const roomListContainer = document.getElementById("roomList");
     const confirmBookingBtn = document.getElementById("confirmBookingBtn");
 
+    // ===== SUMMARY DISPLAY =====
     const summaryBuilding = document.getElementById("summaryBuilding");
     const summaryRoom = document.getElementById("summaryRoom");
     const summaryDate = document.getElementById("summaryDate");
     const summaryTime = document.getElementById("summaryTime");
 
+    // ===== STATE VARIABLES =====
     let currentDate = new Date();
     let selectedBuilding = null;
     let selectedRoom = null;
@@ -29,6 +38,7 @@
 
     let rooms = {};
 
+    // ===== FETCH ROOMS FROM BACKEND =====
     async function loadRooms() {
         try {
             const response = await fetch('/Room/GetRooms');
@@ -41,6 +51,7 @@
         }
     }
 
+    // ===== MOCK TIME DATA (per room) =====
     const mockAvailability = {
         "COB-201": ["8:00 AM", "9:00 AM", "10:00 AM", "1:00 PM", "2:00 PM"],
         "COB-202": ["9:00 AM", "11:00 AM", "3:00 PM"],
@@ -60,6 +71,7 @@
         "VEC-19": ["10:00 AM", "1:00 PM", "4:00 PM"]
     };
 
+    // ===== RENDER ROOMS BASED ON BUILDING =====
     function renderRooms() {
         roomListContainer.innerHTML = "";
 
@@ -83,6 +95,7 @@
                 selectedRoom = room;
                 selectedDate = null;
                 selectedTime = null;
+
                 renderRooms();
                 renderCalendar();
                 renderTimeSlots();
@@ -93,6 +106,7 @@
         });
     }
 
+    // ===== RENDER CALENDAR =====
     function renderCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
@@ -105,12 +119,14 @@
 
         calendarDates.innerHTML = "";
 
+        // empty slots before first day
         for (let i = 0; i < firstDay; i++) {
             const emptyCell = document.createElement("div");
             emptyCell.classList.add("calendar-cell", "empty");
             calendarDates.appendChild(emptyCell);
         }
 
+        // actual days
         for (let day = 1; day <= daysInMonth; day++) {
             const cell = document.createElement("div");
             cell.classList.add("calendar-cell");
@@ -118,32 +134,33 @@
 
             const cellDate = new Date(year, month, day);
             const today = new Date();
+
             today.setHours(0, 0, 0, 0);
             cellDate.setHours(0, 0, 0, 0);
 
+            // highlight today
             if (
-                cellDate.getDate() === today.getDate() &&
-                cellDate.getMonth() === today.getMonth() &&
-                cellDate.getFullYear() === today.getFullYear()
+                cellDate.getTime() === today.getTime()
             ) {
                 cell.classList.add("today");
             }
 
+            // highlight selected
             if (
                 selectedDate &&
-                cellDate.getDate() === selectedDate.getDate() &&
-                cellDate.getMonth() === selectedDate.getMonth() &&
-                cellDate.getFullYear() === selectedDate.getFullYear()
+                cellDate.getTime() === selectedDate.getTime()
             ) {
                 cell.classList.add("selected");
             }
 
+            // disable invalid dates
             if (!selectedBuilding || !selectedRoom || cellDate < today) {
                 cell.classList.add("disabled");
             } else {
                 cell.addEventListener("click", function () {
                     selectedDate = cellDate;
                     selectedTime = null;
+
                     renderCalendar();
                     renderTimeSlots();
                     updateSummary();
@@ -154,6 +171,7 @@
         }
     }
 
+    // ===== RENDER TIME SLOTS =====
     function renderTimeSlots() {
         timeSlotsContainer.innerHTML = "";
 
@@ -186,15 +204,18 @@
         confirmBookingBtn.disabled = !selectedTime;
     }
 
+    // ===== UPDATE SUMMARY CARD =====
     function updateSummary() {
         summaryBuilding.textContent = selectedBuilding || "—";
         summaryRoom.textContent = selectedRoom || "—";
         summaryDate.textContent = selectedDate ? selectedDate.toLocaleDateString() : "—";
         summaryTime.textContent = selectedTime || "—";
 
-        confirmBookingBtn.disabled = !(selectedBuilding && selectedRoom && selectedDate && selectedTime);
+        confirmBookingBtn.disabled =
+            !(selectedBuilding && selectedRoom && selectedDate && selectedTime);
     }
 
+    // ===== BUILDING SELECTION =====
     buildingPins.forEach(pin => {
         pin.addEventListener("click", function () {
             buildingPins.forEach(p => p.classList.remove("active"));
@@ -206,7 +227,6 @@
             selectedTime = null;
 
             selectedBuildingBadge.textContent = selectedBuilding;
-            // buildingInfoText.textContent = `${selectedBuilding} selected. Now choose a room.`;
 
             renderRooms();
             renderCalendar();
@@ -215,6 +235,7 @@
         });
     });
 
+    // ===== CALENDAR NAVIGATION =====
     prevMonthBtn.addEventListener("click", function () {
         currentDate.setMonth(currentDate.getMonth() - 1);
         renderCalendar();
@@ -225,6 +246,7 @@
         renderCalendar();
     });
 
+    // ===== CONFIRM BOOKING =====
     confirmBookingBtn.addEventListener("click", function () {
         if (selectedBuilding && selectedRoom && selectedDate && selectedTime) {
             alert(
@@ -233,27 +255,35 @@
         }
     });
 
+    // ===== PROFILE DROPDOWN LOGIC =====
     if (profileMenuBtn && profileDropdown) {
-    profileMenuBtn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        profileDropdown.classList.toggle("show");
-    });
+        profileMenuBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            profileDropdown.classList.toggle("show");
+        });
 
-    document.addEventListener("click", function (e) {
-        if (!profileMenuBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
-            profileDropdown.classList.remove("show");
-        }
-    });
+        document.addEventListener("click", function (e) {
+            if (
+                !profileMenuBtn.contains(e.target) &&
+                !profileDropdown.contains(e.target)
+            ) {
+                profileDropdown.classList.remove("show");
+            }
+        });
     }
-    
+
+    // ===== INIT FUNCTION =====
     async function init() {
         console.log('init called');
+
         await loadRooms();
+
         renderRooms();
         renderCalendar();
         renderTimeSlots();
         updateSummary();
     }
 
+    // ===== START APP =====
     init();
 });
