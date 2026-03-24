@@ -84,7 +84,7 @@ namespace Sanctum.Controllers
 
         // POST login (basic username/password check)
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public async Task<IActionResult> Login(string username, string password)
         {
             Console.WriteLine(username + ": " + password);
 
@@ -94,6 +94,21 @@ namespace Sanctum.Controllers
             {
                 return View(); // login failed
             }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Username),      // Stores username in claims for later retrieval
+                // Stores email in claims for later use since we dont have a seperate email field
+                new Claim(ClaimTypes.Email, user.Username)      
+            };
+
+            // creates authentication cookie with user claims
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            // creates principal object to sign in the user
+            var principal = new ClaimsPrincipal(identity);
+
+            // signs in the user by setting the authentication cookie so the server can recognize them
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         
             return RedirectToAction("Booking"); // login succeeded
         }

@@ -9,5 +9,6 @@ public class Booking
 
     public int UserID { get; set; }
 
-    public User User { get; set; }
+    // Added = null! to prevent warnings about non-nullable reference types
+    public User User { get; set; } = null!;
 }
