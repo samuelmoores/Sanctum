@@ -53,5 +53,36 @@ namespace Sanctum.Controllers
 
             return Json(new { success = true, message = "Booking confirmed." });
         }
+
+        [HttpGet]
+        public IActionResult GetMyBookings()
+        {
+            // Get the logged-in user
+            var username = User.FindFirst(ClaimTypes.Name)?.Value ??
+                User.FindFirst(ClaimTypes.Email)?.Value;
+
+            // Retrieve the user from the database
+            var user = _db.Users.FirstOrDefault(u => u.Username == username);
+
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User not found." });
+            }
+
+            // Fetch all bookings for this user (ordered by descending time)
+            var bookings = _db.Bookings
+                .Where(b => b.UserID == user.Id)
+                .OrderByDescending(b => b.StartTime)
+                .Select(b => new
+                {
+                    description = b.Description,
+                    // Format example: March 24, 2026 at 2:30 PM - 3:30 PM
+                    startTime = b.StartTime.ToString("MMMM d, yyyy 'at' h:mm tt"),
+                    endTime = b.EndTime.ToString("h:mm tt")
+                })
+                .ToList();
+
+            return Json(new { success = true, bookings });
+        }
     }
 }

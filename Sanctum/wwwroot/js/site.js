@@ -278,9 +278,42 @@
 
     // ===== MY BOOKINGS MODAL =====
     if (viewBookingsBtn && bookingsModalOverlay && closeBookingsModalBtn) {
+        
+        // Load the user bookings
+        function loadMyBookings() {
+            const list = document.getElementById('bookingHistoryList');
+            list.innerHTML = '<p class="empty-bookings-text">Loading your bookings...</p>';
+
+            fetch('/Booking/GetMyBookings')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        list.innerHTML = '<p class="empty-bookings-text">Could not load bookings.</p>';
+                        return;
+                    }
+                    if (data.bookings.length === 0) {
+                        list.innerHTML = '<p class="empty-bookings-text">No bookings found yet.</p>';
+                        return;
+                    }
+                    list.innerHTML = data.bookings.map(b => `
+                        <div class="booking-history-card">
+                            <div class="summary-row">
+                                <span>Room</span>
+                                <strong>${b.description}</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Date &amp; Time</span>
+                                <strong>${b.startTime} – ${b.endTime}</strong>
+                            </div>
+                        </div>
+                    `).join('');
+                });
+        }    
+
     viewBookingsBtn.addEventListener("click", function () {
         bookingsModalOverlay.classList.add("show");
         profileDropdown.classList.remove("show");
+        loadMyBookings();
     });
 
     closeBookingsModalBtn.addEventListener("click", function () {

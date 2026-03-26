@@ -131,58 +131,8 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="booking-history-list">
-
-                        @* 
-                            BACKEND PLACEHOLDER:
-                            Developers should replace this whole placeholder section with real booking data
-                            pulled from the database for the currently signed-in user.
-
-                            Example idea:
-                            - Query bookings by current logged-in user
-                            - Pass them into the view using a model or ViewBag
-                            - Loop through each booking and render a booking-history-card
-
-                            Example structure:
-
-                            @if (Model.UserBookings != null && Model.UserBookings.Any())
-                            {
-                                @foreach (var booking in Model.UserBookings)
-                                {
-                                    div class="booking-history-card">
-                                        <div class="summary-row">
-                                            <span>Building</span>
-                                            <strong>@booking.Building</strong>
-                                        </div>
-                                        <div class="summary-row">
-                                            <span>Room</span>
-                                            <strong>@booking.Room</strong>
-                                        </div>
-                                        <div class="summary-row">
-                                            <span>Date</span>
-                                            <strong>@booking.Date.ToShortDateString()</strong>
-                                        </div>
-                                        <div class="summary-row">
-                                            <span>Time</span>
-                                            <strong>@booking.TimeSlot</strong>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            else
-                            {
-                                <p class="empty-bookings-text">No bookings found yet.</p>
-                            }
-                        *@
-
-                        <div class="booking-history-card booking-placeholder-card">
-                            <p class="empty-bookings-text">
-                                Booking records will appear here once connected to the database.
-                            </p>
-                            <p class="developer-note">
-                                Developer placeholder: replace this card with a loop that renders the signed-in user's actual bookings.
-                            </p>
-                        </div>
+                    <div id="bookingHistoryList" class="booking-history-list">
+                        <p class="empty-bookings-text">Loading your bookings...</p>
                     </div>
                 </div>
             </div>
