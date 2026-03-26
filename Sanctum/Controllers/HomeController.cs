@@ -31,45 +31,24 @@ namespace Sanctum.Controllers
         // PROFILE INPUT (NOT FULLY CONNECTED TO UI YET)
         // =====================================================
 
-        // allows user to add a description (currently console-based, not UI)
-        public IActionResult Describe() 
-        {
-            var des = new User();
-
-            Console.Write("Add Description: ");
-            des.Description = Console.ReadLine();
-
-            Console.WriteLine($"Description@{des.Description}");
-
-            return View();
-        }
-
-        // allows user to add CSULB ID (currently console-based, not UI)
-        public IActionResult ID() 
-        {
-            var id = new User();
-
-            Console.Write("Add CSULB ID: ");
-            string idNum = id.CSULBID.ToString();
-
-            idNum = Console.ReadLine();
-
-            Console.WriteLine($"CSULB ID: @{id.CSULBID}");
-
-            return View();
-        }
-
-        // handles profile submission (currently not fully wired)
+        // Made few Changes to Min handles profile submission (currently not fully wired)
         [HttpPost]
         public IActionResult Profile()
         {
             ViewData["Title"] = "Profile";
+            var info = new User();
+
+            Console.WriteLine("Add School ID:");
+            string idNum = info.CSULBID.ToString();
+            idNum = Console.ReadLine();
+
+            Console.WriteLine("Add Description");
+            info.Description = Console.ReadLine();
 
             // NOTE: these methods do not actually return user input correctly in web context
-            Console.WriteLine(Describe());
-            Console.WriteLine(ID());
-
-            return RedirectToAction("Booking", "Profile");
+            Console.WriteLine($"Description: @{info.Description}");
+            Console.WriteLine($"CSULB ID: @{idNum}");
+            return View(info);
         }
 
         // =====================================================
