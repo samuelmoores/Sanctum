@@ -15,10 +15,8 @@ namespace Sanctum.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateEmail(IFormCollection collection)
+        public async Task<IActionResult> UpdateEmail(int id, string newEmail)
         {
-            var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var newEmail = collection["Email"].ToString().Trim();
             var user = _db.Users.Find(id);
 
             if (user == null)
@@ -34,5 +32,22 @@ namespace Sanctum.Controllers
 
             return RedirectToAction(nameof(HomeController.Index));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(int id, string newPassword)
+        {
+            var user = _db.Users.Find(id);
+
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with ID {id} not found.");
+            }
+
+            user.Password = newPassword;
+            _db.SaveChanges();
+
+            return RedirectToAction(nameof(HomeController.Index));
+        }
+
     }
 }
