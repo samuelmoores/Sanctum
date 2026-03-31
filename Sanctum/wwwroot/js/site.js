@@ -55,27 +55,42 @@
         }
     }
 
-    // ===== MOCK TIME DATA (per room) =====
-    const mockAvailability = {
-        "COB-101": ["8:00 AM", "9:00 AM", "10:00 AM", "1:00 PM", "2:00 PM"],
-        "COB-102": ["9:00 AM", "11:00 AM", "3:00 PM"],
-        "COB-105": ["10:00 AM", "12:00 PM", "4:00 PM"],
-        "COB-106": ["10:00 AM", "12:00 PM", "4:00 PM"],
 
-        "HC-101": ["8:30 AM", "9:30 AM", "1:00 PM"],
-        "HC-102": ["11:00 AM", "12:00 PM", "2:00 PM"],
-        "HC-110": ["10:00 AM", "3:00 PM", "5:00 PM"],
-        "HC-120": ["10:00 AM", "3:00 PM", "5:00 PM"],
-        "HC-125": ["10:00 AM", "3:00 PM", "5:00 PM"],
+    // ===== GENERATE TIME SLOTS BY BUILDING =====
+    function generateTimeSlots(startHour, endHour) {
+        const slots = [];
 
-        "SSSC-110": ["8:00 AM", "10:30 AM", "1:30 PM"],
-        "SSSC-120": ["9:00 AM", "12:30 PM", "4:30 PM"],
+        for (let hour = startHour; hour < endHour; hour++) {
+            const start = formatHour(hour);
+            const end = formatHour(hour + 1);
+            slots.push(`${start} - ${end}`);
+        }
 
-        "VEC-410": ["7:30 AM", "9:30 AM", "12:30 PM"],
-        "VEC-411": ["8:30 AM", "11:30 AM", "2:30 PM"],
-        "VEC-412": ["8:30 AM", "11:30 AM", "2:30 PM"],
-        "VEC-413": ["10:00 AM", "1:00 PM", "4:00 PM"]
-    };
+        return slots;
+    }
+
+    function formatHour(hour) {
+        const suffix = hour >= 12 ? "PM" : "AM";
+        let displayHour = hour % 12;
+
+        if (displayHour === 0) {
+            displayHour = 12;
+        }
+
+        return `${displayHour}:00 ${suffix}`;
+    }
+
+    function getTimeSlotsForBuilding(building) {
+        if (building === "HC") {
+            return generateTimeSlots(9, 20); // 9 AM - 8 PM
+        }
+
+        if (building === "COB" || building === "VEC" || building === "SSSC") {
+            return generateTimeSlots(9, 18); // 9 AM - 6 PM
+        2}
+
+        return [];
+    }
 
     // ===== RENDER ROOMS BASED ON BUILDING =====
     function renderRooms() {
@@ -187,7 +202,7 @@
             return;
         }
 
-        const slots = mockAvailability[selectedRoom] || [];
+        const slots = getTimeSlotsForBuilding(selectedBuilding);
 
         slots.forEach(time => {
             const btn = document.createElement("button");

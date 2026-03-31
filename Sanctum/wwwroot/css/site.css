@@ -447,6 +447,11 @@ main {
     margin: 0;
 }
 
+/* time slots area scrolls if there are many times */
+.time-slots {
+    max-height: calc(3 * 56px);
+    overflow-y: auto;
+}
 
 /* ===================================================== */
 /* BOOKING SUMMARY */
