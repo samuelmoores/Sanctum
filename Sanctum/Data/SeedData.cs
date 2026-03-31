@@ -9,23 +9,24 @@ public class SeedData
         var desiredRooms = new List<Room>
         {
             // ECS
-            new Room { Building = "COB", RoomName = "COB-201" },
-            new Room { Building = "COB", RoomName = "COB-202" },
-            new Room { Building = "COB", RoomName = "COB-301" },
-            new Room { Building = "COB", RoomName = "COB-302" },
+            new Room { Building = "COB", RoomName = "COB-101" },
+            new Room { Building = "COB", RoomName = "COB-102" },
+            new Room { Building = "COB", RoomName = "COB-105" },
+            new Room { Building = "COB", RoomName = "COB-106" },
             // LIB
             new Room { Building = "HC", RoomName = "HC-101" },
-            new Room { Building = "HC", RoomName = "HC-203" },
-            new Room { Building = "HC", RoomName = "HC-305" },
-            new Room { Building = "HC", RoomName = "HC-306" },
+            new Room { Building = "HC", RoomName = "HC-102" },
+            new Room { Building = "HC", RoomName = "HC-110" },
+            new Room { Building = "HC", RoomName = "HC-120" },
+            new Room { Building = "HC", RoomName = "HC-125" },
             // USU
             new Room { Building = "SSSC", RoomName = "SSSC-110" },
-            new Room { Building = "SSSC", RoomName = "SSSC-210" },
+            new Room { Building = "SSSC", RoomName = "SSSC-120" },
             // VEC
-            new Room { Building = "VEC", RoomName = "VEC-17" },
-            new Room { Building = "VEC", RoomName = "VEC-18" },
-            new Room { Building = "VEC", RoomName = "VEC-19" },
-            new Room { Building = "VEC", RoomName = "VEC-20" }
+            new Room { Building = "VEC", RoomName = "VEC-410" },
+            new Room { Building = "VEC", RoomName = "VEC-411" },
+            new Room { Building = "VEC", RoomName = "VEC-412" },
+            new Room { Building = "VEC", RoomName = "VEC-413" }
             
             };
 
@@ -36,6 +37,7 @@ public class SeedData
                 context.Rooms.Add(room); // only add if it doesn't exist yet
             }
         }
+        
         
         context.SaveChanges();
     }
