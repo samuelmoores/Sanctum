@@ -231,6 +231,26 @@ main {
     transform: translate(-50%, -50%) scale(1.05);
 }
 
+/* ===== BLINKING BUILDING PINS ===== */
+
+@keyframes pinPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(235, 169, 27, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 12px rgba(235, 169, 27, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(235, 169, 27, 0);
+    }
+}
+
+/* blinking state */
+.building-pin.blinking {
+    animation: pinPulse 1.0s infinite;
+    background: linear-gradient(145deg, #ffd56a, #eba91b);
+}
+
 /* active/selected building pin */
 .building-pin.active {
     background: linear-gradient(145deg, #ffd56a, #eba91b);

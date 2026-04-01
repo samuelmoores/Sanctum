@@ -238,8 +238,14 @@
 
     // ===== BUILDING SELECTION =====
     buildingPins.forEach(pin => {
+        pin.classList.add("blinking");
+
         pin.addEventListener("click", function () {
-            buildingPins.forEach(p => p.classList.remove("active"));
+            buildingPins.forEach(p => {
+                p.classList.remove("active");
+                p.classList.remove("blinking");
+            });
+
             pin.classList.add("active");
 
             selectedBuilding = pin.dataset.building;
