@@ -152,7 +152,7 @@ namespace Sanctum.Controllers
         [HttpPost]
         public IActionResult Register(string username, string password)
         {
-            var user = new User { Username = username, Password = password };
+            var user = new User { Username = username, Password = password, Description = "" };
 
             _db.Users.Add(user);
             _db.SaveChanges();
