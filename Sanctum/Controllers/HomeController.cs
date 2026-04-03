@@ -48,7 +48,7 @@ namespace Sanctum.Controllers
             // NOTE: these methods do not actually return user input correctly in web context
             Console.WriteLine($"Description: @{info.Description}");
             Console.WriteLine($"CSULB ID: @{idNum}");
-            return View(info);
+            return View();
         }
 
         // =====================================================
