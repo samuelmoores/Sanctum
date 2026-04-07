@@ -1,15 +1,20 @@
 ﻿@model Sanctum.Models.User
-<div>
+<div class="text-center">
     <h1>@ViewData["Title"]</h1>
-    <form method="post" action="Home/Profile">
+    <form method="post" asp-action="Profile">
+        <div class="align-content-center align-content-md-center" >
         <h2>@ViewBag.Username</h2>
-
-        <p>@Model.CSULBID</p>
-        <p>@Model.Description</p>
-        <form asp-controller="Home" asp-action="Booking" class="btn btn-primary">
-            <button>Go Back</button>
-        </form>
+        <label>CSULBID Student ID: </label>
+        <input type="text" name="CSULBID">
+        <label>Description: </label>
+        <input type="text" name="Description">
+        <button type="submit">Save</button>
+        <p>CSULB ID: @ViewBag.intel</p>
+        <p>Description: @ViewBag.des</p>
+        </div>
     </form>
-    
+    <a asp-controller="Home" asp-action="Booking" class="btn btn-primary">
+        Go Back
+    </a>
 
 </div>

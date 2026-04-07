@@ -13,9 +13,9 @@ namespace Sanctum.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "CSULBID",
                 table: "Users",
-                type: "INTEGER",
+                type: "TEXT",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: "");
 
             migrationBuilder.AddColumn<string>(
                 name: "Description",

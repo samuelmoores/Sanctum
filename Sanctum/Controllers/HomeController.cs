@@ -28,26 +28,37 @@ namespace Sanctum.Controllers
         }
 
         // =====================================================
-        // PROFILE INPUT (NOT FULLY CONNECTED TO UI YET)
+        // PROFILE WEBPAGE
         // =====================================================
 
-        // Made few Changes to Min handles profile submission (currently not fully wired)
-        [HttpPost]
+        [HttpGet]
         public IActionResult Profile()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Profile(User info)
+        {
             ViewData["Title"] = "Profile";
-            var info = new User();
 
-            Console.WriteLine("Add School ID:");
-            string idNum = info.CSULBID.ToString();
-            idNum = Console.ReadLine();
+            ViewBag.des = info.Description;
 
-            Console.WriteLine("Add Description");
-            info.Description = Console.ReadLine();
-
-            // NOTE: these methods do not actually return user input correctly in web context
-            Console.WriteLine($"Description: @{info.Description}");
-            Console.WriteLine($"CSULB ID: @{idNum}");
+            //if (info.CSULBID.Length != 9 || !info.CSULBID.All(char.IsDigit))
+            //{
+            //    return Content("Invalid ID — must be exactly 9 digits.");
+            //}
+            ViewBag.intel = info.CSULBID;
+            // * Working Progress *
+            //try
+            //{
+            //    _db.Users.Add(info);
+            //    _db.SaveChanges();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Content(ex.InnerException?.Message ?? ex.Message);
+            //}
             return View();
         }
 

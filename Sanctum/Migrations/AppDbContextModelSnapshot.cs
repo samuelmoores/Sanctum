@@ -77,7 +77,7 @@ namespace Sanctum.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CSULBID")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
