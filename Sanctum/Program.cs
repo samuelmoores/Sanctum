@@ -9,8 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Configure Entity Framework with PostgreSQL (Supabase))
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=sanctum.db"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 builder.Services.AddAuthentication(options =>

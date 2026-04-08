@@ -36,7 +36,15 @@ namespace Sanctum.Controllers
             }            
     
             // Parse the start time from date and time strings (1 Hours Booking)
-            DateTime startTime = DateTime.Parse($"{date} {time}");
+            // Needed to add .ToUniversalTime() to ensure the time is stored in UTC format in the database becasue while SQlite stores in local time, 
+            // PostgreSQL (Supabase) stores in UTC which causes issues if not addressed
+
+            //Explicitly set the Kind before conversion to ensure it is treated as local time and then converted to UTC correctly
+            var timePart = time.Split('-')[0];
+            var dateTimeString = $"{date} {timePart}";
+            DateTime startTime = DateTime.Parse(dateTimeString);
+
+            startTime = DateTime.SpecifyKind(startTime, DateTimeKind.Local).ToUniversalTime();
             DateTime endTime = startTime.AddHours(1);
 
             // Create a new booking and save it to the database
@@ -45,7 +53,8 @@ namespace Sanctum.Controllers
                 UserID = user.Id,
                 StartTime = startTime,
                 EndTime = endTime,
-                Description = $"{building} - {room}" // Store room info in description
+                // No building since one is already associated with the room, so we can just store the room info in the description for simplicity
+                Description = $"{room}" // Store room info in description
             };
 
             _db.Bookings.Add(booking);

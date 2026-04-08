@@ -274,8 +274,21 @@
     });
 
     // ===== CONFIRM BOOKING =====
-    confirmBookingBtn.addEventListener("click", function () {
+    confirmBookingBtn.addEventListener("click", async function () {
+        // If all selections are made, send booking request to backend databse (SupaBase)
         if (selectedBuilding && selectedRoom && selectedDate && selectedTime) {
+            const response = await fetch('/Booking/ConfirmBooking', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `building=${selectedBuilding}&room=${selectedRoom}&date=${selectedDate.toLocaleDateString('en-CA')}&time=${selectedTime.split(' - ')[0]}`
+            });
+            
+            const data = await response.json();
+
+            if (!data.success) {
+                alert(`Booking failed: ${data.message}`);
+                return;
+            }
             alert(
                 `Booking confirmed!\n\nBuilding: ${selectedBuilding}\nRoom: ${selectedRoom}\nDate: ${selectedDate.toLocaleDateString()}\nTime: ${selectedTime}`
             );
