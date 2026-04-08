@@ -38,7 +38,7 @@ namespace Sanctum.Migrations
                     Username = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    CSULBID = table.Column<int>(type: "integer", nullable: false)
+                    CSULBID = table.Column<int>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

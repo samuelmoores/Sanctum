@@ -11,21 +11,21 @@ namespace Sanctum.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "CSULBID",
+                name: "Description",
                 table: "Users",
                 type: "text",
                 nullable: false,
-                oldClrType: typeof(int),
-                oldType: "integer");
+                oldClrType: typeof(string),
+                oldType: "text");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
+            migrationBuilder.AlterColumn<string>(
                 name: "CSULBID",
                 table: "Users",
-                type: "integer",
+                type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "text");
