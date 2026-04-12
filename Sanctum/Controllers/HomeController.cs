@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 namespace Sanctum.Controllers
 {
@@ -42,6 +43,7 @@ namespace Sanctum.Controllers
         {
             ViewData["Title"] = "Profile";
 
+
             ViewBag.des = info.Description;
 
             //if (info.CSULBID.Length != 9 || !info.CSULBID.All(char.IsDigit))
@@ -60,6 +62,26 @@ namespace Sanctum.Controllers
             //    return Content(ex.InnerException?.Message ?? ex.Message);
             //}
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadImg(IFormFile uploadedFile) 
+        {
+            string upload = Path.Combine(Directory.GetCurrentDirectory(),"wweroot/images/uploads");
+            if (!Directory.Exists(upload)) Directory.CreateDirectory(upload);
+
+            
+            string unique = Guid.NewGuid().ToString() + "_" + Guid.NewGuid().ToString();
+            string file = Path.Combine(upload, unique);
+
+            using(var fileStreams = new FileStream(file, FileMode.Create))
+            {
+                await uploadedFile.CopyToAsync(fileStreams);
+            }
+
+            ViewBag.Mess = "Upload Successfull";
+
+            return View("Profile");
         }
 
         // =====================================================

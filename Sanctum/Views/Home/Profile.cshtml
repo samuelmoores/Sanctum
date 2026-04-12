@@ -1,18 +1,27 @@
 ﻿@model Sanctum.Models.User
 <div class="text-center">
     <h1>@ViewData["Title"]</h1>
+    <div class="text-body">
+        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UploadImage">
+            <h2>@ViewBag.Username</h2>
+            <input type="file" name="upload" accept="image/*" required />
+            <button type="submit">Upload</button>
+        </form>
+        
     <form method="post" asp-action="Profile">
         <div class="align-content-center align-content-md-center" >
-        <h2>@ViewBag.Username</h2>
-        <label>CSULBID Student ID: </label>
-        <input type="text" name="CSULBID">
-        <label>Description: </label>
-        <input type="text" name="Description">
-        <button type="submit">Save</button>
-        <p>CSULB ID: @ViewBag.intel</p>
-        <p>Description: @ViewBag.des</p>
+            <div class="align-content-md-center align-text-top">
+                <label>CSULBID Student ID: </label>
+                <input type="text" name="CSULBID">
+                <label>Description: </label>
+                <input type="text" name="Description">
+                <button type="submit">Save</button>
+            </div>
+            <p>CSULB ID: @ViewBag.intel</p>
+            <p>Description: @ViewBag.des</p>
         </div>
     </form>
+    </div>
     <a asp-controller="Home" asp-action="Booking" class="btn btn-primary">
         Go Back
     </a>
