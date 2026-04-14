@@ -543,6 +543,25 @@ main {
     cursor: not-allowed;
 }
 
+/* login button */
+.login-btn {
+    width: 50%;
+    margin-top: 18px;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-weight: bold;
+    color: black;
+    background: linear-gradient(145deg, #ffd56a, #ffd56a);
+    box-shadow: 8px 8px 18px rgba(0, 0, 0, 0.15);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+}
+
 
 /* ===================================================== */
 /* PROFILE MENU */

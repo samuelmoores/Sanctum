@@ -3,23 +3,25 @@
 }
 
 <div class="text-center">
+    <h3 style="margin-top: 10px;"></h3>
     <h1 class="display-4">Login</h1>
+    <h3 style="margin-top: 30px;"></h3>
 
-    <form method="post" action="/Home/Login">
-        <div>
-            <label>Username</label>
+    <form method="post" action="/Home/Login" style="display: inline-block; text-align: left;">
+        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+            <label style="width: 90px; margin-right: 10px;">Username</label>
             <input type="text" name="Username" />
         </div>
-        <div>
-            <label>Password</label>
+        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+            <label style="width: 90px; margin-right: 10px;">Password</label>
             <input type="password" name="Password" />
         </div>
-        <button type="submit">Login</button>
+        <div style="text-align: center; margin-top: 10px;">
+            <button type="submit" class="login-btn">Login</button>
+        </div>
     </form>
 
-    <hr />
-
-    <h3>Or</h3>
+    <h3 style="margin-top: 30px;">Or</h3>
     <form asp-controller="Home" asp-action="ExternalLogin" method="post">
         <input type="hidden" name="returnurl" value="@ViewBag.ReturnUrl" />
         <button type="submit" name="provider" value="Google" class="btn btn-primary">
