@@ -43,6 +43,7 @@ namespace Sanctum.Controllers
         {
             ViewData["Title"] = "Profile";
 
+            ViewBag.use = info.Username;
 
             ViewBag.des = info.Description;
 
@@ -51,11 +52,11 @@ namespace Sanctum.Controllers
             //    return Content("Invalid ID — must be exactly 9 digits.");
             //}
             ViewBag.intel = info.CSULBID;
-            // * Working Progress *
+           
             //try
             //{
-            //    _db.Users.Add(info);
-            //    _db.SaveChanges();
+            _db.Users.Add(info);
+            _db.SaveChanges();
             //}
             //catch (Exception ex)
             //{

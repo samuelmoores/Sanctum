@@ -3,7 +3,7 @@
     <h1>@ViewData["Title"]</h1>
     <div class="text-body">
         <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UploadImage">
-            <h2>@ViewBag.Username</h2>
+            <h2>Username: @ViewBag.use</h2>
             <input type="file" name="upload" accept="image/*" required />
             <button type="submit">Upload</button>
         </form>
