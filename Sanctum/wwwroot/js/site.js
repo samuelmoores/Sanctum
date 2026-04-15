@@ -334,12 +334,20 @@
                     list.innerHTML = data.bookings.map(b => `
                         <div class="booking-history-card">
                             <div class="summary-row">
-                                <span>Room</span>
-                                <strong>${b.description}</strong>
+                                <span>Building</span>
+                                <strong>${b.building}</strong>
                             </div>
                             <div class="summary-row">
-                                <span>Date &amp; Time</span>
-                                <strong>${b.startTime} – ${b.endTime}</strong>
+                                <span>Room</span>
+                                <strong>${b.room}</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Date</span>
+                                <strong>${b.date}</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Time</span>
+                                <strong>${b.time}</strong>
                             </div>
                         </div>
                     `).join('');

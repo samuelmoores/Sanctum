@@ -53,8 +53,7 @@ namespace Sanctum.Controllers
                 UserID = user.Id,
                 StartTime = startTime,
                 EndTime = endTime,
-                // No building since one is already associated with the room, so we can just store the room info in the description for simplicity
-                Description = $"{room}" // Store room info in description
+                Description = $"{building}|{room}" // Store building and room separated by pipe
             };
 
             _db.Bookings.Add(booking);
@@ -79,17 +78,24 @@ namespace Sanctum.Controllers
             }
 
             // Fetch all bookings for this user (ordered by descending time)
-            var bookings = _db.Bookings
+            var rawBookings = _db.Bookings
                 .Where(b => b.UserID == user.Id)
                 .OrderByDescending(b => b.StartTime)
-                .Select(b => new
-                {
-                    description = b.Description,
-                    // Format example: March 24, 2026 at 2:30 PM - 3:30 PM
-                    startTime = b.StartTime.ToString("MMMM d, yyyy 'at' h:mm tt"),
-                    endTime = b.EndTime.ToString("h:mm tt")
-                })
                 .ToList();
+
+            var bookings = rawBookings.Select(b =>
+            {
+                var parts = b.Description?.Split('|');
+                var building = parts?.Length == 2 ? parts[0] : "—";
+                var room     = parts?.Length == 2 ? parts[1] : (b.Description ?? "—");
+                return new
+                {
+                    building,
+                    room,
+                    date = b.StartTime.ToString("MMMM d, yyyy"),
+                    time = b.StartTime.ToString("h:mm tt") + " – " + b.EndTime.ToString("h:mm tt")
+                };
+            }).ToList();
 
             return Json(new { success = true, bookings });
         }
