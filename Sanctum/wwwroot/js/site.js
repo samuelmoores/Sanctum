@@ -41,6 +41,7 @@
     let selectedTime = null;
 
     let rooms = {};
+    let cachedBookedSlots = []; 
 
     // ===== FETCH ROOMS FROM BACKEND =====
     async function loadRooms() {
@@ -87,7 +88,7 @@
 
         if (building === "COB" || building === "VEC" || building === "SSSC") {
             return generateTimeSlots(9, 18); // 9 AM - 6 PM
-        2}
+        }
 
         return [];
     }
@@ -192,8 +193,32 @@
         }
     }
 
+    // Convert 12-hour time format to 24-hour format for backend comparison
+    function convertTo24Hour(time12h) {
+        const [time, period] = time12h.split(' ');
+        let [hours, minutes] = time.split(':');
+        hours = parseInt(hours);
+        if (period === 'PM' && hours !== 12)  hours += 12;
+        if (period === 'AM' && hours === 12) hours = 0;
+        return `${hours.toString().padStart(2, '0')}:${minutes}`;
+    }
+
+    // Fetch booked time slots for the selected building, room, and date in order to remove from the front end if not available
+    async function fetchbookedSlots(building, room, date) {
+    try {
+        const response = await fetch(`/Booking/GetBookedSlots?building=${building}&room=${room}&date=${date.toLocaleDateString('en-CA')}`);
+        const data = await response.json();
+        console.log('Booked slots response:', data); // <-- add this
+        return data.bookedSlots || [];
+    } catch (error) {
+        console.error('Failed to fetch booked slots:', error);
+        return [];
+    }
+    }
+
+
     // ===== RENDER TIME SLOTS =====
-    function renderTimeSlots() {
+    async function renderTimeSlots() {
         timeSlotsContainer.innerHTML = "";
 
         if (!selectedBuilding || !selectedRoom || !selectedDate) {
@@ -204,26 +229,50 @@
 
         const slots = getTimeSlotsForBuilding(selectedBuilding);
 
+        cachedBookedSlots = await fetchbookedSlots(selectedBuilding, selectedRoom, selectedDate);
+        
+        displayTimeSlots(slots, cachedBookedSlots);
+    }
+
+
+
+    // ===== Seperate display function - no fetch, just re-renders button
+    function displayTimeSlots(slots, bookedslots) {
+        timeSlotsContainer.innerHTML = "";
+
         slots.forEach(time => {
             const btn = document.createElement("button");
             btn.classList.add("time-slot-btn");
             btn.textContent = time;
 
-            if (selectedTime === time) {
+            const StartTime24 = convertTo24Hour(time.split(' - ')[0]);
+            const isBooked = bookedslots.includes(StartTime24);
+
+            if (isBooked) {
+                btn.classList.add("booked");
+                btn.disabled = true;
+            }
+
+            else if (selectedTime === time) {
                 btn.classList.add("selected");
             }
 
-            btn.addEventListener("click", function () {
-                selectedTime = time;
-                renderTimeSlots();
-                updateSummary();
-            });
+            if (!isBooked) {
+                btn.addEventListener("click", function () {
+                    selectedTime = time;
+                    displayTimeSlots(slots, bookedslots);
+                    updateSummary();
+                }
+            )};
 
             timeSlotsContainer.appendChild(btn);
         });
 
         confirmBookingBtn.disabled = !selectedTime;
     }
+
+
+
 
     // ===== UPDATE SUMMARY CARD =====
     function updateSummary() {
@@ -275,6 +324,7 @@
 
     // ===== CONFIRM BOOKING =====
     confirmBookingBtn.addEventListener("click", async function () {
+        
         // If all selections are made, send booking request to backend databse (SupaBase)
         if (selectedBuilding && selectedRoom && selectedDate && selectedTime) {
             const response = await fetch('/Booking/ConfirmBooking', {
@@ -292,6 +342,8 @@
             alert(
                 `Booking confirmed!\n\nBuilding: ${selectedBuilding}\nRoom: ${selectedRoom}\nDate: ${selectedDate.toLocaleDateString()}\nTime: ${selectedTime}`
             );
+            // Added so that after a user confirms a booking, it reloads and no longer allows the user to use the same time slot again
+            await renderTimeSlots();
         }
     });
 

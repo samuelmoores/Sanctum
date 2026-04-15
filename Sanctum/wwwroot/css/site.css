@@ -463,6 +463,14 @@ main {
     box-sizing: border-box;
 }
 
+/* disabled time slots that are already booked and gray them out */
+.time-slot-btn:disabled {
+    opacity: 0.45;
+    color: #666;
+    cursor: not-allowed;
+
+}
+
 /* hover effect for times */
 .time-slot-btn:hover {
     transform: translateY(-2px);

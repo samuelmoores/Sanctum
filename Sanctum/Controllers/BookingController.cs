@@ -99,5 +99,39 @@ namespace Sanctum.Controllers
 
             return Json(new { success = true, bookings });
         }
+    
+
+        // Fetch booked time slots for a specific building, room, and date to disable those time slots on the front end
+        [HttpGet]
+        public IActionResult GetBookedSlots(string building, string room, string date)
+        {
+            // Validate the date input
+            if (!DateTime.TryParse(date, out DateTime parsedDate))
+            {
+                return Json(new { bookedSlots = new List<string>() });
+            }
+
+            // Fetch all bookings for the specified building, room, and date
+            DateTime dayStart = DateTime.SpecifyKind(parsedDate.Date, DateTimeKind.Local).ToUniversalTime();
+            DateTime dayEnd = dayStart.AddDays(1);
+
+            // Filter bookings by matching building and room in the description and falling within the specified date range
+            var booked = _db.Bookings
+                .Where(b => 
+                    b.Description == $"{building}|{room}" &&
+                    b.StartTime >= dayStart && 
+                    b.StartTime < dayEnd)
+                .Select(b => b.StartTime)
+                .ToList();
+
+            // Convert booked DateTimes to 24-hour format strings for easier comparison on the front end
+            var bookedSlots = booked
+                .Select(dt => dt.ToLocalTime().ToString("HH:mm")) // Convert back to local time for display
+                .ToList();
+
+            return Json(new { bookedSlots = bookedSlots });
+        }
+
     }
+
 }
