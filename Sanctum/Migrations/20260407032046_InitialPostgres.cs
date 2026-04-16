@@ -37,8 +37,10 @@ namespace Sanctum.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Username = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
+                    First = table.Column<string>(type: "text", nullable: false),
+                    Last = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    CSULBID = table.Column<int>(type: "text", nullable: false)
+                    CSULBID = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

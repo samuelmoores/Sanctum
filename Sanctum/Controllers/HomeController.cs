@@ -44,7 +44,8 @@ namespace Sanctum.Controllers
             ViewData["Title"] = "Profile";
 
             ViewBag.use = info.Username;
-
+            ViewBag.fir = info.First;
+            ViewBag.las = info.Last;
             ViewBag.des = info.Description;
 
             //if (info.CSULBID.Length != 9 || !info.CSULBID.All(char.IsDigit))
@@ -52,7 +53,9 @@ namespace Sanctum.Controllers
             //    return Content("Invalid ID — must be exactly 9 digits.");
             //}
             ViewBag.intel = info.CSULBID;
-           
+
+            ViewBag.password = info.Password ?? "";
+
             //try
             //{
             _db.Users.Add(info);

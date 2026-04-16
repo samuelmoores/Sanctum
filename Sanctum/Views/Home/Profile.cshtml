@@ -1,29 +1,55 @@
 ﻿@model Sanctum.Models.User
 <div class="text-center">
     <h1>@ViewData["Title"]</h1>
-    <div class="text-body">
         <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UploadImage">
-            <h2>Username: @ViewBag.use</h2>
-            <input type="file" name="upload" accept="image/*" required />
-            <button type="submit">Upload</button>
+            <input type="file" name="upload" accept="image/*" required>
+            <button class="btn btn-primary" type="submit">Upload</button>
         </form>
-        
+
     <form method="post" asp-action="Profile">
-        <div class="align-content-center align-content-md-center" >
-            <div class="align-content-md-center align-text-top">
-                <label>CSULBID Student ID: </label>
-                <input type="text" name="CSULBID">
-                <label>Description: </label>
-                <input type="text" name="Description">
-                <button type="submit">Save</button>
-            </div>
+        <div style="align-content: center;">
+            <h2>Username: @ViewBag.use</h2>
+            <p>Password: @ViewBag.password</p>
             <p>CSULB ID: @ViewBag.intel</p>
             <p>Description: @ViewBag.des</p>
+            <p>First: @ViewBag.fir</p>
+            <p>Last: @ViewBag.las</p>
         </div>
+
+        <div style="align-content: normal;">
+            <label>Username: </label>
+                <div>
+                    <input type="text" name="Username">
+                </div>
+            <label>Password: </label>
+                <div>
+                    <input type="text" name="Password">
+                </div>
+            <label>First Name: </label>
+                <div>
+                    <input type="text" name="First">
+                </div>
+
+            <label>Last Name: </label>
+                <div>
+                    <input type="text" name="Last">
+                </div>
+
+            <label>CSULBID Student ID: </label>
+                <div>
+                    <input type="text" name="CSULBID">
+                </div>
+
+            <label>Description: </label>
+                <div>
+                    <input type="text" name="Description">
+                </div>
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+        
     </form>
-    </div>
+
     <a asp-controller="Home" asp-action="Booking" class="btn btn-primary">
         Go Back
     </a>
-
 </div>

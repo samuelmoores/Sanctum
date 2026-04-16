@@ -103,6 +103,14 @@ namespace Sanctum.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("First")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Last")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
