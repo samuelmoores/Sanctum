@@ -1,46 +1,125 @@
-﻿@model Sanctum.Models.User
-<div class="text-center">
-    <h1>@ViewData["Title"]</h1>
-        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UploadImage">
-            <input type="file" name="upload" accept="image/*" required>
-            <button class="btn btn-primary" type="submit">Upload</button>
-        </form>
+@model Sanctum.Models.User
+@{
+    ViewData["Title"] = "Profile";
+}
 
-    <form method="post" asp-action="Profile">
-        <div style="align-content: center;">
-            <h2>Username: @ViewBag.use</h2>
-            <p>Password: @ViewBag.password</p>
-            <p>CSULB ID: @ViewBag.intel</p>
-            <p>Description: @ViewBag.des</p>
-            <p>First: @ViewBag.fir</p>
-            <p>Last: @ViewBag.las</p>
+<div class="profile-page">
+
+    <h1 class="display-4" style="text-align:center; margin-bottom: 36px;">Profile</h1>
+
+    <div class="profile-columns">
+
+        @* ── LEFT: avatar + current info ── *@
+        <div class="profile-left">
+
+            <div class="avatar-wrapper">
+                <div class="avatar-circle" id="avatarCircle">
+                    <span class="avatar-initials" id="avatarInitials">
+                        @(((string)ViewBag.fir ?? "?").Substring(0,1).ToUpper())@(((string)ViewBag.las ?? "").Length > 0 ? ((string)ViewBag.las).Substring(0,1).ToUpper() : "")
+                    </span>
+                    <img id="avatarImg" class="avatar-img" src="" alt="Profile photo" style="display:none;" />
+                </div>
+                <p class="avatar-name">@ViewBag.fir @ViewBag.las</p>
+                <p class="avatar-username">@ViewBag.use</p>
+            </div>
+
+            <div class="profile-info-card">
+                <div class="profile-info-row">
+                    <span class="profile-info-label">First Name</span>
+                    <span class="profile-info-value">@ViewBag.fir</span>
+                </div>
+                <div class="profile-info-row">
+                    <span class="profile-info-label">Last Name</span>
+                    <span class="profile-info-value">@ViewBag.las</span>
+                </div>
+                <div class="profile-info-row">
+                    <span class="profile-info-label">Username</span>
+                    <span class="profile-info-value">@ViewBag.use</span>
+                </div>
+                <div class="profile-info-row">
+                    <span class="profile-info-label">Password</span>
+                    <span class="profile-info-value">@ViewBag.password</span>
+                </div>
+                <div class="profile-info-row">
+                    <span class="profile-info-label">CSULB ID</span>
+                    <span class="profile-info-value">@ViewBag.intel</span>
+                </div>
+                <div class="profile-info-row" style="border-bottom:none;">
+                    <span class="profile-info-label">Description</span>
+                    <span class="profile-info-value">@ViewBag.des</span>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top: 20px;">
+                <a asp-controller="Home" asp-action="Booking" class="profile-back-btn">← Go Back</a>
+            </div>
+
         </div>
 
-        <div style="align-content: normal;">
-            <label>Username: </label>
-                <div>
-                    <input type="text" name="Username">
-                </div>
-            <label>Password: </label>
-                <div>
-                    <input type="text" name="Password">
-                </div>
+        @* ── RIGHT: upload + edit form ── *@
+        <div class="profile-right">
 
-            <label>CSULBID Student ID: </label>
-                <div>
-                    <input type="text" name="CSULBID">
-                </div>
+            <div class="profile-section-card">
+                <h3 class="profile-section-title">Profile Photo</h3>
+                <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UploadImage">
+                    <div class="profile-upload-area" id="uploadArea">
+                        <input type="file" name="upload" accept="image/*" id="photoInput" class="profile-file-input" required />
+                        <label for="photoInput" class="profile-upload-label">
+                            <span class="upload-icon">↑</span>
+                            <span id="uploadText">Choose a photo</span>
+                        </label>
+                    </div>
+                    <div style="text-align:center; margin-top: 14px;">
+                        <button type="submit" class="login-btn">Upload Photo</button>
+                    </div>
+                </form>
+            </div>
 
-            <label>Description: </label>
-                <div>
-                    <input type="text" name="Description">
-                </div>
-            <button class="btn btn-primary" type="submit">Save</button>
+            <div class="profile-section-card" style="margin-top: 24px;">
+                <h3 class="profile-section-title">Edit Info</h3>
+                <form method="post" asp-action="Profile">
+                    <div style="display:flex; align-items:center; margin-bottom:12px;">
+                        <label class="profile-edit-label">Username</label>
+                        <input type="text" name="Username" class="auth-input" />
+                    </div>
+                    <div style="display:flex; align-items:center; margin-bottom:12px;">
+                        <label class="profile-edit-label">Password</label>
+                        <input type="password" name="Password" class="auth-input" />
+                    </div>
+                    <div style="display:flex; align-items:center; margin-bottom:12px;">
+                        <label class="profile-edit-label">CSULB Student ID</label>
+                        <input type="text" name="CSULBID" class="auth-input" />
+                    </div>
+                    <div style="display:flex; align-items:center; margin-bottom:12px;">
+                        <label class="profile-edit-label">Description</label>
+                        <input type="text" name="Description" class="auth-input" />
+                    </div>
+                    <div style="text-align:center; margin-top: 16px;">
+                        <button type="submit" class="login-btn">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
-        
-    </form>
-
-    <a asp-controller="Home" asp-action="Booking" class="btn btn-primary">
-        Go Back
-    </a>
+    </div>
 </div>
+
+<script>
+    const input = document.getElementById('photoInput');
+    const avatarImg = document.getElementById('avatarImg');
+    const avatarInitials = document.getElementById('avatarInitials');
+    const uploadText = document.getElementById('uploadText');
+
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+        uploadText.textContent = file.name;
+        const reader = new FileReader();
+        reader.onload = e => {
+            avatarImg.src = e.target.result;
+            avatarImg.style.display = 'block';
+            avatarInitials.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    });
+</script>

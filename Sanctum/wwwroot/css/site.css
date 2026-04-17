@@ -593,6 +593,214 @@ main {
     box-shadow: 6px 8px 20px rgba(235, 169, 27, 0.45);
 }
 
+/* ===================================================== */
+/* PROFILE PAGE */
+/* ===================================================== */
+
+.profile-page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+}
+
+/* two-column layout */
+.profile-columns {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 32px;
+    align-items: start;
+}
+
+/* ── left column ── */
+.profile-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* avatar circle container */
+.avatar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.avatar-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffd56a, #eba91b);
+    box-shadow: 6px 6px 20px rgba(235,169,27,0.4),
+                -4px -4px 12px rgba(243, 242, 242, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.avatar-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 4px;
+}
+
+.avatar-username {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* current info summary card */
+.profile-info-card {
+    background: linear-gradient(145deg, #ffffff, #f5f7fb);
+    border-radius: 16px;
+    box-shadow: 6px 6px 16px rgba(0,0,0,0.12),
+                -4px -4px 10px rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 6px 20px;
+}
+
+.profile-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    gap: 24px;
+}
+
+.profile-info-label {
+    font-weight: 600;
+    color: #6b7280;
+    font-size: 13px;
+    min-width: 90px;
+}
+
+.profile-info-value {
+    color: #1f2937;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* ── right column ── */
+.profile-right {
+    display: flex;
+    flex-direction: column;
+}
+
+/* each card on the right */
+.profile-section-card {
+    background: linear-gradient(145deg, #ffffff, #f5f7fb);
+    border-radius: 20px;
+    box-shadow: 8px 8px 20px rgba(0,0,0,0.12),
+                -5px -5px 12px rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 22px 24px;
+}
+
+.profile-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* drag/click upload zone */
+.profile-upload-area {
+    position: relative;
+    border: 2px dashed rgba(0,0,0,0.15);
+    border-radius: 14px;
+    padding: 28px 16px;
+    text-align: center;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+}
+
+.profile-upload-area:hover {
+    border-color: #eba91b;
+    background: rgba(235,169,27,0.06);
+}
+
+.profile-file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+.profile-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.upload-icon {
+    font-size: 28px;
+    color: #eba91b;
+}
+
+/* label for edit form rows */
+.profile-edit-label {
+    width: 150px;
+    flex-shrink: 0;
+    margin-right: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+/* go back ghost button */
+.profile-back-btn {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 10px 28px;
+    border-radius: 12px;
+    border: 1.5px solid #d1d5db;
+    font-weight: 600;
+    font-size: 14px;
+    color: #4b5563;
+    text-decoration: none;
+    background: linear-gradient(145deg, #ffffff, #f3f4f6);
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.06);
+    transition: 0.2s ease;
+}
+
+.profile-back-btn:hover {
+    transform: translateY(-2px);
+    color: #1f2937;
+    border-color: #9ca3af;
+}
+
+/* responsive: stack on small screens */
+@media (max-width: 700px) {
+    .profile-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 /* ===================================================== */
 /* PROFILE MENU */
