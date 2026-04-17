@@ -90,6 +90,7 @@ namespace Sanctum.Controllers
                 var room     = parts?.Length == 2 ? parts[1] : (b.Description ?? "—");
                 return new
                 {
+                    id = b.Id,
                     building,
                     room,
                     date = b.StartTime.ToString("MMMM d, yyyy"),
@@ -100,6 +101,26 @@ namespace Sanctum.Controllers
             return Json(new { success = true, bookings });
         }
     
+
+        [HttpDelete]
+        public IActionResult CancelBooking(int id)
+        {
+            var username = User.FindFirst(ClaimTypes.Name)?.Value ??
+                User.FindFirst(ClaimTypes.Email)?.Value;
+
+            var user = _db.Users.FirstOrDefault(u => u.Username == username);
+            if (user == null)
+                return Json(new { success = false, message = "User not found." });
+
+            var booking = _db.Bookings.FirstOrDefault(b => b.Id == id && b.UserID == user.Id);
+            if (booking == null)
+                return Json(new { success = false, message = "Booking not found." });
+
+            _db.Bookings.Remove(booking);
+            _db.SaveChanges();
+
+            return Json(new { success = true });
+        }
 
         // Fetch booked time slots for a specific building, room, and date to disable those time slots on the front end
         [HttpGet]

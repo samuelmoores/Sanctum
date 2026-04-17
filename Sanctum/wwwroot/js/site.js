@@ -384,7 +384,7 @@
                         return;
                     }
                     list.innerHTML = data.bookings.map(b => `
-                        <div class="booking-history-card">
+                        <div class="booking-history-card" data-booking-id="${b.id}">
                             <div class="summary-row">
                                 <span>Building</span>
                                 <strong>${b.building}</strong>
@@ -401,10 +401,31 @@
                                 <span>Time</span>
                                 <strong>${b.time}</strong>
                             </div>
+                            <button class="cancel-booking-btn" data-id="${b.id}">Cancel Reservation</button>
                         </div>
                     `).join('');
+
+                    list.querySelectorAll('.cancel-booking-btn').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            const bookingId = this.dataset.id;
+                            if (!confirm('Are you sure you want to cancel this reservation? This action is irreversible.')) return;
+                            fetch(`/Booking/CancelBooking?id=${bookingId}`, { method: 'DELETE' })
+                                .then(r => r.json())
+                                .then(result => {
+                                    if (result.success) {
+                                        const card = list.querySelector(`[data-booking-id="${bookingId}"]`);
+                                        if (card) card.remove();
+                                        if (list.querySelectorAll('.booking-history-card').length === 0) {
+                                            list.innerHTML = '<p class="empty-bookings-text">No bookings found yet.</p>';
+                                        }
+                                    } else {
+                                        alert('Could not cancel booking. Please try again.');
+                                    }
+                                });
+                        });
+                    });
                 });
-        }    
+        }
 
     viewBookingsBtn.addEventListener("click", function () {
         bookingsModalOverlay.classList.add("show");

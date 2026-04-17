@@ -1090,3 +1090,22 @@ main {
     border: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.8);
 }
+
+.cancel-booking-btn {
+    display: block;
+    margin: 12px auto 0;
+    width: 30%;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    background: #e53e3e;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cancel-booking-btn:hover {
+    background: #c53030;
+}
