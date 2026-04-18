@@ -47,6 +47,8 @@ namespace Sanctum.Controllers
             ViewBag.des = user.Description;
             ViewBag.intel = user.CSULBID;
             ViewBag.password = user.Password;
+            ViewBag.userId = user.Id;
+            ViewBag.hasPhoto = user.ProfilePhoto != null;
 
             return View();
         }
@@ -72,23 +74,30 @@ namespace Sanctum.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadImg(IFormFile uploadedFile) 
+        public async Task<IActionResult> UploadImage(IFormFile upload)
         {
-            string upload = Path.Combine(Directory.GetCurrentDirectory(),"wweroot/images/uploads");
-            if (!Directory.Exists(upload)) Directory.CreateDirectory(upload);
+            var username = User.FindFirst(ClaimTypes.Name)?.Value;
+            if (username == null) return RedirectToAction("Login");
 
-            
-            string unique = Guid.NewGuid().ToString() + "_" + Guid.NewGuid().ToString();
-            string file = Path.Combine(upload, unique);
+            var user = _db.Users.FirstOrDefault(u => u.Username == username);
+            if (user == null || upload == null || upload.Length == 0)
+                return RedirectToAction("Profile");
 
-            using(var fileStreams = new FileStream(file, FileMode.Create))
-            {
-                await uploadedFile.CopyToAsync(fileStreams);
-            }
+            using var ms = new MemoryStream();
+            await upload.CopyToAsync(ms);
+            user.ProfilePhoto = ms.ToArray();
+            user.ProfilePhotoType = upload.ContentType;
+            _db.SaveChanges();
 
-            ViewBag.Mess = "Upload Successfull";
+            return RedirectToAction("Profile");
+        }
 
-            return View("Profile");
+        [HttpGet]
+        public IActionResult GetPhoto(int id)
+        {
+            var user = _db.Users.Find(id);
+            if (user?.ProfilePhoto == null) return NotFound();
+            return File(user.ProfilePhoto, user.ProfilePhotoType ?? "image/jpeg");
         }
 
         // =====================================================
@@ -218,8 +227,12 @@ namespace Sanctum.Controllers
                 Console.WriteLine(result);
             }
 
-            // gets the signed-in user's name from claims
-            ViewBag.UserName = User.FindFirst(ClaimTypes.Name)?.Value ?? "Student";
+            var bookingUsername = User.FindFirst(ClaimTypes.Name)?.Value ?? "Student";
+            ViewBag.UserName = bookingUsername;
+
+            var bookingUser = _db.Users.FirstOrDefault(u => u.Username == bookingUsername);
+            ViewBag.userId = bookingUser?.Id;
+            ViewBag.hasPhoto = bookingUser?.ProfilePhoto != null;
 
             return View();
         }

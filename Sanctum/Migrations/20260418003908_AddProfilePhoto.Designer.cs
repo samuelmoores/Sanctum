@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Sanctum.Data;
@@ -11,9 +12,11 @@ using Sanctum.Data;
 namespace Sanctum.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260418003908_AddProfilePhoto")]
+    partial class AddProfilePhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,10 +110,7 @@ namespace Sanctum.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<byte[]>("ProfilePhoto")
-                        .HasColumnType("bytea");
-
-                    b.Property<string>("ProfilePhotoType")
+                    b.Property<string>("ProfilePhoto")
                         .HasColumnType("text");
 
                     b.Property<string>("Username")

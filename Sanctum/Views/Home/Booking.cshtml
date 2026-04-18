@@ -14,8 +14,15 @@
 
             <div class="profile-menu-wrapper">
                 <button id="profileMenuBtn" class="profile-menu-btn" type="button" aria-label="Profile menu">
-                    <span class="profile-icon-head"></span>
-                    <span class="profile-icon-body"></span>
+                    @if ((bool)(ViewBag.hasPhoto ?? false))
+                    {
+                        <img src="/Home/GetPhoto?id=@ViewBag.userId" alt="Profile" style="width:50px; height:50px; object-fit:cover; border-radius:50%; display:block;" />
+                    }
+                    else
+                    {
+                        <span class="profile-icon-head"></span>
+                        <span class="profile-icon-body"></span>
+                    }
                 </button>
 
                 <div id="profileDropdown" class="profile-dropdown">

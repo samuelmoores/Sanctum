@@ -14,10 +14,10 @@
 
             <div class="avatar-wrapper">
                 <div class="avatar-circle" id="avatarCircle">
-                    <span class="avatar-initials" id="avatarInitials">
+                    <span class="avatar-initials" id="avatarInitials" style="@((bool)ViewBag.hasPhoto ? "display:none;" : "")">
                         @(((string)ViewBag.fir ?? "?").Substring(0,1).ToUpper())@(((string)ViewBag.las ?? "").Length > 0 ? ((string)ViewBag.las).Substring(0,1).ToUpper() : "")
                     </span>
-                    <img id="avatarImg" class="avatar-img" src="" alt="Profile photo" style="display:none;" />
+                    <img id="avatarImg" class="avatar-img" src="@((bool)ViewBag.hasPhoto ? "/Home/GetPhoto?id=" + ViewBag.userId : "")" alt="Profile photo" style="@((bool)ViewBag.hasPhoto ? "display:block;" : "display:none;")" />
                 </div>
                 <p class="avatar-name">@ViewBag.fir @ViewBag.las</p>
                 <p class="avatar-username">@ViewBag.use</p>

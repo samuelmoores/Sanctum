@@ -11,6 +11,8 @@ public class User
     public string Password { get; set; } = null!;
     public string Description {  get; set; } = null!;
     public string CSULBID { get; set; } = null!;
+    public byte[]? ProfilePhoto { get; set; }
+    public string? ProfilePhotoType { get; set; }
 
     public ICollection<Booking>? Bookings { get; set; }
 }
