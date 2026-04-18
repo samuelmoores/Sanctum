@@ -35,6 +35,19 @@ namespace Sanctum.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
+            var username = User.FindFirst(ClaimTypes.Name)?.Value;
+            if (username == null) return RedirectToAction("Login");
+
+            var user = _db.Users.FirstOrDefault(u => u.Username == username);
+            if (user == null) return RedirectToAction("Login");
+
+            ViewBag.use = user.Username;
+            ViewBag.fir = user.First;
+            ViewBag.las = user.Last;
+            ViewBag.des = user.Description;
+            ViewBag.intel = user.CSULBID;
+            ViewBag.password = user.Password;
+
             return View();
         }
 
@@ -50,7 +63,7 @@ namespace Sanctum.Controllers
 
             //if (info.CSULBID.Length != 9 || !info.CSULBID.All(char.IsDigit))
             //{
-            //    return Content("Invalid ID — must be exactly 9 digits.");
+            //    return Content("Invalid ID ï¿½ must be exactly 9 digits.");
             //}
             ViewBag.intel = info.CSULBID;
 
@@ -187,9 +200,9 @@ namespace Sanctum.Controllers
 
         // POST register (adds user to database)
         [HttpPost]
-        public IActionResult Register(string username, string password)
+        public IActionResult Register(string username, string First, string Last, string password)
         {
-            var user = new User { Username = username, Password = password, Description = "" };
+            var user = new User { Username = username, First = First, Last = Last, Password = password, Description = "", CSULBID = "" };
 
             _db.Users.Add(user);
             _db.SaveChanges();
