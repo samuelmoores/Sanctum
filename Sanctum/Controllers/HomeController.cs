@@ -199,14 +199,21 @@ namespace Sanctum.Controllers
 
         // POST register (adds user to database)
         [HttpPost]
-        public IActionResult Register(string email, string username, string First, string Last, string password)
+        public IActionResult Register(string email, string First, string Last, string password)
         {
-            var user = new User { Email = email, Username = username, First = First, Last = Last, Password = password, Description = "", CSULBID = "" };
+            var user = new User { Email = email, Username = email, First = First, Last = Last, Password = password, Description = "", CSULBID = "" };
 
-            _db.Users.Add(user);
-            _db.SaveChanges();
+            Console.WriteLine("email: " + email);
 
-            return RedirectToAction("Login");
+            if(email.Contains("csulb.edu"))
+            {
+                _db.Users.Add(user);
+                _db.SaveChanges();
+                return RedirectToAction("Login");
+            }
+
+            return RedirectToAction("Register");
+
         }
 
         // =====================================================
