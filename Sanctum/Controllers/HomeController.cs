@@ -120,6 +120,7 @@ namespace Sanctum.Controllers
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
+                ViewBag.alert = "Username or Password is Invalid!";
                 return View(); // login failed
             }
 

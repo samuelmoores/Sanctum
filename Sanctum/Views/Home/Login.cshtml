@@ -19,6 +19,14 @@
         <div style="text-align: center; margin-top: 10px;">
             <button type="submit" class="login-btn">Login</button>
         </div>
+        <div style="text-align: center; margin-top: 10px;">
+            @if (ViewBag.alert != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.alert
+                    </div>
+                }
+            </div>
     </form>
 
     <h3 style="margin-top: 30px;">Or</h3>
