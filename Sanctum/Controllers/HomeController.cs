@@ -116,9 +116,9 @@ namespace Sanctum.Controllers
         {
             Console.WriteLine(username + ": " + password);
 
-            var user = _db.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
+            var user = _db.Users.FirstOrDefault(u => u.Username == username);
 
-            if (user == null)
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
                 return View(); // login failed
             }
@@ -201,7 +201,8 @@ namespace Sanctum.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(string email, string First, string Last, string password)
         {
-            var user = new User { Email = email, Username = email, First = First, Last = Last, Password = password, Description = "", CSULBID = "" };
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+            var user = new User { Email = email, Username = email, First = First, Last = Last, Password = hashedPassword, Description = "", CSULBID = "" };
 
             Console.WriteLine("email to register with: " + email);
 
