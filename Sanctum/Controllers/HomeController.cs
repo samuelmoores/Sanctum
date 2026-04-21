@@ -201,6 +201,9 @@ namespace Sanctum.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(string email, string First, string Last, string password)
         {
+            if (email == null || First == null || Last == null || password == null)
+                return RedirectToAction("Register");
+
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
             var user = new User { Email = email, Username = email, First = First, Last = Last, Password = hashedPassword, Description = "", CSULBID = "" };
 
