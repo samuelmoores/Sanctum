@@ -1,7 +1,3 @@
-@{
-    ViewData["Title"] = "Sign Up";
-}
-
 <div class="text-center">
     <h3 style="margin-top: 10px;"></h3>
     <h1 class="display-4">Sign Up</h1>
@@ -35,7 +31,13 @@
                     @ViewBag.reg
                 </div>
             }
-        </div>
+        else if(ViewBag.csulb != null)
+        {
+                <div class="alert alert-danger" role="alert">
+                    @ViewData["Message"]
+                </div>
+        }
+            </div>
         <div style="text-align: center; margin-top: 10px;">
             <button type="submit" class="login-btn">Register</button>
         </div>
