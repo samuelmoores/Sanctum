@@ -118,9 +118,10 @@ namespace Sanctum.Controllers
 
             var user = _db.Users.FirstOrDefault(u => u.Username == username);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password) || user.Username == "@student.csulb.edu")
             {
                 ViewBag.alert = "Username or Password is Invalid!";
+                ViewBag.userCSULB = "It must be a @csulb.student.edu!";
                 return View(); // login failed
             }
 
@@ -203,8 +204,11 @@ namespace Sanctum.Controllers
         public async Task<IActionResult> Register(string email, string First, string Last, string password)
         {
             if (email == null || First == null || Last == null || password == null)
-                return RedirectToAction("Register");
-
+            {
+                ViewBag.reg = "One of the Sign Up fields are empty. Please Fill it in or restart again.";
+                return View();
+            }
+            
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
             var user = new User { Email = email, Username = email, First = First, Last = Last, Password = hashedPassword, Description = "", CSULBID = "" };
 
