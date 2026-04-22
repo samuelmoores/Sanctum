@@ -88,13 +88,15 @@ namespace Sanctum.Controllers
                 var parts = b.Description?.Split('|');
                 var building = parts?.Length == 2 ? parts[0] : "—";
                 var room     = parts?.Length == 2 ? parts[1] : (b.Description ?? "—");
+                var localStart = b.StartTime.ToLocalTime();
+                var localEnd = b.EndTime.ToLocalTime();
                 return new
                 {
                     id = b.Id,
                     building,
                     room,
-                    date = b.StartTime.ToString("MMMM d, yyyy"),
-                    time = b.StartTime.ToString("h:mm tt") + " – " + b.EndTime.ToString("h:mm tt")
+                    date = localStart.ToString("MMMM d, yyyy"),
+                    time = localStart.ToString("h:mm tt") + " – " + localEnd.ToString("h:mm tt")
                 };
             }).ToList();
 
