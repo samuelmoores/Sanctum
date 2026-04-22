@@ -54,7 +54,7 @@ namespace Sanctum.Controllers
         }
 
         [HttpPost]
-        public IActionResult Profile(string? Password, string? CSULBID, string? Description)
+        public IActionResult Profile(string? Password, string? Description)
         {
             var username = User.FindFirst(ClaimTypes.Name)?.Value;
             if (username == null) return RedirectToAction("Login");
@@ -64,8 +64,6 @@ namespace Sanctum.Controllers
 
             if (!string.IsNullOrWhiteSpace(Password))
                 user.Password = Password;
-            if (!string.IsNullOrWhiteSpace(CSULBID))
-                user.CSULBID = CSULBID;
             if (!string.IsNullOrWhiteSpace(Description))
                 user.Description = Description;
 
@@ -200,7 +198,7 @@ namespace Sanctum.Controllers
 
         // POST register (adds user to database)
         [HttpPost]
-        public async Task<IActionResult> Register(string email, string First, string Last, string password)
+        public async Task<IActionResult> Register(string email, string First, string Last, string password, string? CSULBID)
         {
             if (email == null || First == null || Last == null || password == null)
             {
@@ -209,9 +207,21 @@ namespace Sanctum.Controllers
                 ViewBag.reg = "One of the Sign Up fields are empty.";
                 return View();
             }
-            
+
+            if (!string.IsNullOrWhiteSpace(CSULBID) && !CSULBID.All(char.IsDigit))
+            {
+                ViewBag.reg = "Student ID can only contain numbers.";
+                return View();
+            }
+
+            if (!string.IsNullOrWhiteSpace(CSULBID) && CSULBID.Length > 10)
+            {
+                ViewBag.reg = "Student ID cannot be more than 10 digits.";
+                return View();
+            }
+
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-            var user = new User { Email = email, Username = email, First = First, Last = Last, Password = hashedPassword, Description = "", CSULBID = "" };
+            var user = new User { Email = email, Username = email, First = First, Last = Last, Password = hashedPassword, Description = "", CSULBID = CSULBID ?? "" };
 
             Console.WriteLine("email to register with: " + email);
 
