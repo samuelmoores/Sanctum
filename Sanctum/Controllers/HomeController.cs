@@ -232,7 +232,8 @@ namespace Sanctum.Controllers
                 return await Login(email, password);
             }
 
-            return RedirectToAction("Register");
+            ViewBag.reg = "Only CSULB email addresses are allowed.";
+            return View();
 
         }
 

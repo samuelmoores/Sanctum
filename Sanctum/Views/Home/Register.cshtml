@@ -6,7 +6,10 @@
     <form method="post" action="/Home/Register" style="display: inline-block; text-align: left;">
         <div style="display: flex; align-items: center; margin-bottom: 10px;">
             <label style="width: 130px; margin-right: 10px;">Email</label>
-            <input type="text" name="email" class="auth-input" />
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <input type="text" name="email" class="auth-input" />
+                <span style="font-size: 0.75rem; color: #999; margin-top: 3px;">Use your @@student.csulb.edu email</span>
+            </div>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 10px;">
             <label style="width: 130px; margin-right: 10px;">First Name</label>
