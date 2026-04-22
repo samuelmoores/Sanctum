@@ -182,6 +182,12 @@ namespace Sanctum.Controllers
                 return View();
             }
 
+            if (_db.Users.Any(u => u.Username == email))
+            {
+                ViewBag.reg = "An account with this email already exists. Try logging in.";
+                return View();
+            }
+
             if (!string.IsNullOrWhiteSpace(CSULBID) && !CSULBID.All(char.IsDigit))
             {
                 ViewBag.reg = "Student ID can only contain numbers.";
