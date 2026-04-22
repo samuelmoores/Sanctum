@@ -110,8 +110,14 @@ namespace Sanctum.Controllers
 
         // POST login (basic username/password check)
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password)
+        public async Task<IActionResult> Login(string? username, string? password)
         {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                ViewBag.alert = "Please fill in all fields.";
+                return View();
+            }
+
             Console.WriteLine(username + ": " + password);
 
             var user = _db.Users.FirstOrDefault(u => u.Username == username);
