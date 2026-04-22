@@ -1109,3 +1109,25 @@ main {
 .cancel-booking-btn:hover {
     background: #c53030;
 }
+.nav-back-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff, #f3f4f6);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #374151;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.nav-back-btn:hover {
+    transform: translateY(-1px);
+    color: #374151;
+    text-decoration: none;
+}

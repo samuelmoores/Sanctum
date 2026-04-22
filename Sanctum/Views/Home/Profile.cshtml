@@ -76,7 +76,10 @@
                 <form method="post" asp-action="Profile">
                     <div style="display:flex; align-items:center; margin-bottom:12px;">
                         <label class="profile-edit-label">Password</label>
-                        <input type="password" name="Password" class="auth-input" />
+                        <div style="position:relative; display:inline-block;">
+                            <input type="password" name="Password" id="profilePassword" class="auth-input" style="padding-right:44px;" />
+                            <button type="button" onclick="togglePassword('profilePassword', this)" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#999; font-size:0.85rem;">Show</button>
+                        </div>
                     </div>
                     <div style="display:flex; align-items:center; margin-bottom:12px;">
                         <label class="profile-edit-label">Description</label>
@@ -110,4 +113,11 @@
         };
         reader.readAsDataURL(file);
     });
+
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.textContent = show ? 'Hide' : 'Show';
+    }
 </script>
