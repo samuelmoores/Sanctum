@@ -29,6 +29,14 @@
             <input type="password" name="confirmPassword" class="auth-input" />
         </div>
         <div style="text-align: center; margin-top: 10px;">
+        @if (ViewBag.reg != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.reg
+                </div>
+            }
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
             <button type="submit" class="login-btn">Register</button>
         </div>
     </form>
