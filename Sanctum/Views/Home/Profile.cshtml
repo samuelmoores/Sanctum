@@ -82,9 +82,20 @@
                         </div>
                     </div>
                     <div style="display:flex; align-items:center; margin-bottom:12px;">
+                        <label class="profile-edit-label">Confirm Password</label>
+                        <div style="position:relative; display:inline-block;">
+                            <input type="password" name="ConfirmPassword" id="profileConfirm" class="auth-input" style="padding-right:44px;" />
+                            <button type="button" onclick="togglePassword('profileConfirm', this)" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#999; font-size:0.85rem;">Show</button>
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center; margin-bottom:12px;">
                         <label class="profile-edit-label">Description</label>
                         <input type="text" name="Description" class="auth-input" />
                     </div>
+                    @if (ViewBag.profileError != null)
+                    {
+                        <div class="alert alert-danger" role="alert" style="margin-top:8px;">@ViewBag.profileError</div>
+                    }
                     <div style="text-align:center; margin-top: 16px;">
                         <button type="submit" class="login-btn">Save Changes</button>
                     </div>

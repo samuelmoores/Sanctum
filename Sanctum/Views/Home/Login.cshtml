@@ -15,9 +15,13 @@
             <label style="width: 90px; margin-right: 10px;">Username</label>
             <input type="text" name="Username" class="auth-input" />
         </div>
-        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <div style="display: flex; align-items: center; margin-bottom: 4px;">
             <label style="width: 90px; margin-right: 10px;">Password</label>
             <input type="password" name="Password" class="auth-input" />
+        </div>
+        <div style="display: flex; margin-bottom: 10px;">
+            <span style="width: 90px; margin-right: 10px;"></span>
+            <a asp-controller="Home" asp-action="ResetPassword" style="font-size:0.8rem; color:#3b82f6; text-decoration:underline; cursor:pointer; transition: color 0.15s;">Forgot Password?</a>
         </div>
         <div style="text-align: center; margin-top: 10px;">
             <button type="submit" class="login-btn">Login</button>

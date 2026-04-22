@@ -14,14 +14,17 @@ body {
     padding-bottom: 60px;
 }
 
-/* wraps whole page so footer can stay at bottom */
+/* wraps whole page so footer sits after content */
 .page-wrapper {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* main content area above footer */
+/* main content area grows to push footer down */
 .content-wrapper {
     width: 100%;
+    flex: 1;
 }
 
 main {
@@ -35,29 +38,10 @@ main {
 
 /* footer styling */
 .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-
     height: 60px;
     line-height: 60px;
-
     text-align: center;
     white-space: nowrap;
-
-    z-index: 1000;
-}
-
-@media (max-height: 850px) {
-    .booking-page ~ .footer,
-    body:has(.booking-page) .footer {
-        display: none;
-    }
-
-    body:has(.booking-page) {
-        padding-bottom: 0;
-    }
 }
 
 /* ===================================================== */
@@ -65,7 +49,7 @@ main {
 /* ===================================================== */
 
 .home-container {
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 60px - 1.5rem);
     display: flex;
     flex-direction: column;
     align-items: center;

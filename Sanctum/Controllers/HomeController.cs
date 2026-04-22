@@ -54,7 +54,7 @@ namespace Sanctum.Controllers
         }
 
         [HttpPost]
-        public IActionResult Profile(string? Password, string? Description)
+        public IActionResult Profile(string? Password, string? ConfirmPassword, string? Description)
         {
             var username = User.FindFirst(ClaimTypes.Name)?.Value;
             if (username == null) return RedirectToAction("Login");
@@ -62,8 +62,22 @@ namespace Sanctum.Controllers
             var user = _db.Users.FirstOrDefault(u => u.Username == username);
             if (user == null) return RedirectToAction("Login");
 
-            if (!string.IsNullOrWhiteSpace(Password))
-                user.Password = Password;
+            if (!string.IsNullOrWhiteSpace(Password) || !string.IsNullOrWhiteSpace(ConfirmPassword))
+            {
+                if (Password != ConfirmPassword)
+                {
+                    ViewBag.profileError = "Passwords do not match.";
+                    ViewBag.use = user.Username;
+                    ViewBag.fir = user.First;
+                    ViewBag.las = user.Last;
+                    ViewBag.des = user.Description;
+                    ViewBag.intel = user.CSULBID;
+                    ViewBag.userId = user.Id;
+                    ViewBag.hasPhoto = user.ProfilePhoto != null;
+                    return View();
+                }
+                user.Password = BCrypt.Net.BCrypt.HashPassword(Password);
+            }
             if (!string.IsNullOrWhiteSpace(Description))
                 user.Description = Description;
 
@@ -152,6 +166,44 @@ namespace Sanctum.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
+        }
+
+        // =====================================================
+        // RESET PASSWORD
+        // =====================================================
+
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ResetPassword(string CSULBID, string newPassword, string confirmPassword)
+        {
+            if (string.IsNullOrWhiteSpace(CSULBID) || string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(confirmPassword))
+            {
+                ViewBag.error = "Please fill in all fields.";
+                return View();
+            }
+
+            var user = _db.Users.FirstOrDefault(u => u.CSULBID == CSULBID);
+            if (user == null)
+            {
+                ViewBag.error = "No account found with that Student ID.";
+                return View();
+            }
+
+            if (newPassword != confirmPassword)
+            {
+                ViewBag.error = "Passwords do not match.";
+                return View();
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            _db.SaveChanges();
+
+            return RedirectToAction("Login");
         }
 
         // =====================================================
