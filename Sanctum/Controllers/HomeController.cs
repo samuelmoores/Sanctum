@@ -140,44 +140,6 @@ namespace Sanctum.Controllers
             return RedirectToAction("Booking"); // login succeeded
         }
 
-        // =====================================================
-        // GOOGLE AUTHENTICATION (EXTERNAL LOGIN)
-        // =====================================================
-
-        // starts Google login flow
-        [HttpPost]
-        public IActionResult ExternalLogin(string provider, string returnUrl = "/")
-        {
-            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Home", new { returnUrl });
-            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
-
-            return Challenge(properties, provider);
-        }
-
-        // handles Google login callback
-        [HttpGet]
-        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = "/", string? remoteError = null)
-        {
-            if (remoteError != null)
-            {
-                return RedirectToAction(nameof(Login));
-            }
-
-            var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            if (!result.Succeeded)
-            {
-                return RedirectToAction(nameof(Login));
-            }
-
-            // extract user info from Google
-            var email = result.Principal.FindFirstValue(ClaimTypes.Email);
-            var name = result.Principal.FindFirstValue(ClaimTypes.Name);
-
-            // currently just redirects (no DB save yet)
-            return RedirectToAction("Booking");
-        }
-
         // logout user
         [HttpPost]
         public async Task<IActionResult> Logout()
@@ -198,13 +160,19 @@ namespace Sanctum.Controllers
 
         // POST register (adds user to database)
         [HttpPost]
-        public async Task<IActionResult> Register(string email, string First, string Last, string password, string? CSULBID)
+        public async Task<IActionResult> Register(string email, string First, string Last, string password, string? confirmPassword, string? CSULBID)
         {
             if (email == null || First == null || Last == null || password == null)
             {
                 ViewBag.csulb = email;
                 ViewData["Message"] = "Needs to be csulb.edu";
                 ViewBag.reg = "One of the Sign Up fields are empty.";
+                return View();
+            }
+
+            if (password != confirmPassword)
+            {
+                ViewBag.reg = "Passwords do not match.";
                 return View();
             }
 

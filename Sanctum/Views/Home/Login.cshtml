@@ -29,11 +29,4 @@
         </div>
     </form>
 
-    <h3 style="margin-top: 30px;">Or</h3>
-    <form asp-controller="Home" asp-action="ExternalLogin" method="post">
-        <input type="hidden" name="returnurl" value="@ViewBag.ReturnUrl" />
-        <button type="submit" name="provider" value="Google" class="btn btn-primary">
-            Login with Google
-        </button>
-    </form>
 </div>

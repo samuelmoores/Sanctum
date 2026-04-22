@@ -25,11 +25,17 @@
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 10px;">
             <label style="width: 130px; margin-right: 10px;">Password</label>
-            <input type="password" name="password" class="auth-input" />
+            <div style="position: relative; display: inline-block;">
+                <input type="password" name="password" id="regPassword" class="auth-input" style="padding-right: 44px;" />
+                <button type="button" onclick="togglePassword('regPassword', this)" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#999; font-size:0.85rem;">Show</button>
+            </div>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 10px;">
             <label style="width: 130px; margin-right: 10px;">Confirm Password</label>
-            <input type="password" name="confirmPassword" class="auth-input" />
+            <div style="position: relative; display: inline-block;">
+                <input type="password" name="confirmPassword" id="regConfirm" class="auth-input" style="padding-right: 44px;" />
+                <button type="button" onclick="togglePassword('regConfirm', this)" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#999; font-size:0.85rem;">Show</button>
+            </div>
         </div>
         <div style="text-align: center; margin-top: 10px;">
         @if (ViewBag.reg != null)
@@ -50,3 +56,12 @@
         </div>
     </form>
 </div>
+
+<script>
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.textContent = show ? 'Hide' : 'Show';
+    }
+</script>
