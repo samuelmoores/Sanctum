@@ -44,7 +44,6 @@ namespace Sanctum.Controllers
             ViewBag.use = user.Username;
             ViewBag.fir = user.First;
             ViewBag.las = user.Last;
-            ViewBag.des = user.Description;
             ViewBag.intel = user.CSULBID;
             ViewBag.password = user.Password;
             ViewBag.userId = user.Id;
@@ -54,7 +53,7 @@ namespace Sanctum.Controllers
         }
 
         [HttpPost]
-        public IActionResult Profile(string? Password, string? ConfirmPassword, string? Description)
+        public IActionResult Profile(string? Password, string? ConfirmPassword)
         {
             var username = User.FindFirst(ClaimTypes.Name)?.Value;
             if (username == null) return RedirectToAction("Login");
@@ -78,9 +77,6 @@ namespace Sanctum.Controllers
                 }
                 user.Password = BCrypt.Net.BCrypt.HashPassword(Password);
             }
-            if (!string.IsNullOrWhiteSpace(Description))
-                user.Description = Description;
-
             _db.SaveChanges();
             return RedirectToAction("Profile");
         }

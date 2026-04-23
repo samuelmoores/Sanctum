@@ -36,13 +36,9 @@
                     <span class="profile-info-label">Email</span>
                     <span class="profile-info-value">@ViewBag.use</span>
                 </div>
-                <div class="profile-info-row">
+                <div class="profile-info-row" style="border-bottom:none;">
                     <span class="profile-info-label">CSULB ID</span>
                     <span class="profile-info-value">@ViewBag.intel</span>
-                </div>
-                <div class="profile-info-row" style="border-bottom:none;">
-                    <span class="profile-info-label">Description</span>
-                    <span class="profile-info-value">@ViewBag.des</span>
                 </div>
             </div>
 
@@ -95,10 +91,6 @@
                             <input type="password" name="ConfirmPassword" id="profileConfirm" class="auth-input" style="padding-right:44px;" />
                             <button type="button" onclick="togglePassword('profileConfirm', this)" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#999; font-size:0.85rem;">Show</button>
                         </div>
-                    </div>
-                    <div style="display:flex; align-items:center; margin-bottom:12px;">
-                        <label class="profile-edit-label">Description</label>
-                        <input type="text" name="Description" class="auth-input" />
                     </div>
                     @if (ViewBag.profileError != null)
                     {
