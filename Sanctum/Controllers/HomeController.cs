@@ -234,6 +234,12 @@ namespace Sanctum.Controllers
                 return View();
             }
 
+            if (password.Length < 8 || password.Length > 15 || !password.Any(char.IsUpper) || !password.Any(char.IsDigit))
+            {
+                ViewBag.reg = "Password must be 8–15 characters and include at least 1 uppercase letter and 1 number.";
+                return View();
+            }
+
             if (_db.Users.Any(u => u.Username == email))
             {
                 ViewBag.reg = "An account with this email already exists. Try logging in.";

@@ -26,11 +26,19 @@
             <label style="width: 130px; margin-right: 10px;">CSULB Student ID</label>
             <input type="text" name="CSULBID" class="auth-input" inputmode="numeric" maxlength="10" />
         </div>
-        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <div style="display: flex; align-items: center; margin-bottom: 6px;">
             <label style="width: 130px; margin-right: 10px;">Password</label>
             <div style="position: relative; display: inline-block;">
                 <input type="password" name="password" id="regPassword" class="auth-input" style="padding-right: 44px;" />
                 <button type="button" onclick="togglePassword('regPassword', this)" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#999; font-size:0.85rem;">Show</button>
+            </div>
+        </div>
+        <div style="display: flex; margin-bottom: 10px;">
+            <span style="width: 130px; margin-right: 10px; flex-shrink:0;"></span>
+            <div class="pwd-requirements" id="pwdRequirements">
+                <div class="pwd-req" id="req-length"><span class="pwd-dot">●</span> 8–15 characters</div>
+                <div class="pwd-req" id="req-upper"><span class="pwd-dot">●</span> At least 1 uppercase letter</div>
+                <div class="pwd-req" id="req-number"><span class="pwd-dot">●</span> At least 1 number</div>
             </div>
         </div>
         <div style="display: flex; align-items: center; margin-bottom: 10px;">
@@ -67,4 +75,24 @@
         input.type = show ? 'text' : 'password';
         btn.textContent = show ? 'Hide' : 'Show';
     }
+
+    const pwdInput = document.getElementById('regPassword');
+    const pwdRequirements = document.getElementById('pwdRequirements');
+    const reqLength = document.getElementById('req-length');
+    const reqUpper  = document.getElementById('req-upper');
+    const reqNumber = document.getElementById('req-number');
+
+    pwdInput.addEventListener('input', function () {
+        const val = this.value;
+
+        if (val.length > 0) {
+            pwdRequirements.classList.add('visible');
+        } else {
+            pwdRequirements.classList.remove('visible');
+        }
+
+        reqLength.classList.toggle('met', val.length >= 8 && val.length <= 15);
+        reqUpper.classList.toggle('met',  /[A-Z]/.test(val));
+        reqNumber.classList.toggle('met', /[0-9]/.test(val));
+    });
 </script>
