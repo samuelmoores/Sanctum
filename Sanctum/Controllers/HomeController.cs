@@ -288,9 +288,8 @@ namespace Sanctum.Controllers
             }
 
             var bookingUsername = User.FindFirst(ClaimTypes.Name)?.Value ?? "Student";
-            ViewBag.UserName = bookingUsername;
-
             var bookingUser = _db.Users.FirstOrDefault(u => u.Username == bookingUsername);
+            ViewBag.UserName = bookingUser?.First ?? bookingUsername;
             ViewBag.userId = bookingUser?.Id;
             ViewBag.hasPhoto = bookingUser?.ProfilePhoto != null;
 
