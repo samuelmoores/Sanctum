@@ -418,6 +418,7 @@
                                         if (list.querySelectorAll('.booking-history-card').length === 0) {
                                             list.innerHTML = '<p class="empty-bookings-text">No bookings found yet.</p>';
                                         }
+                                        renderTimeSlots(); // Refresh available time slots in case the user canceled a booking for the currently viewed date/room
                                     } else {
                                         alert('Could not cancel booking. Please try again.');
                                     }
