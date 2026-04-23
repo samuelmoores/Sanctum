@@ -74,11 +74,19 @@
             <div class="profile-section-card" style="margin-top: 24px;">
                 <h3 class="profile-section-title">Edit Info</h3>
                 <form method="post" asp-action="Profile">
-                    <div style="display:flex; align-items:center; margin-bottom:12px;">
+                    <div style="display:flex; align-items:center; margin-bottom:6px;">
                         <label class="profile-edit-label">Password</label>
                         <div style="position:relative; display:inline-block;">
                             <input type="password" name="Password" id="profilePassword" class="auth-input" style="padding-right:44px;" />
                             <button type="button" onclick="togglePassword('profilePassword', this)" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#999; font-size:0.85rem;">Show</button>
+                        </div>
+                    </div>
+                    <div style="display:flex; margin-bottom:12px;">
+                        <span class="profile-edit-label"></span>
+                        <div class="pwd-requirements" id="pwdRequirements">
+                            <div class="pwd-req" id="req-length"><span class="pwd-dot">●</span> 8–15 characters</div>
+                            <div class="pwd-req" id="req-upper"><span class="pwd-dot">●</span> At least 1 uppercase letter</div>
+                            <div class="pwd-req" id="req-number"><span class="pwd-dot">●</span> At least 1 number</div>
                         </div>
                     </div>
                     <div style="display:flex; align-items:center; margin-bottom:12px;">
@@ -131,4 +139,18 @@
         input.type = show ? 'text' : 'password';
         btn.textContent = show ? 'Hide' : 'Show';
     }
+
+    const pwdInput = document.getElementById('profilePassword');
+    const pwdRequirements = document.getElementById('pwdRequirements');
+    const reqLength = document.getElementById('req-length');
+    const reqUpper  = document.getElementById('req-upper');
+    const reqNumber = document.getElementById('req-number');
+
+    pwdInput.addEventListener('input', function () {
+        const val = this.value;
+        pwdRequirements.classList.toggle('visible', val.length > 0);
+        reqLength.classList.toggle('met', val.length >= 8 && val.length <= 15);
+        reqUpper.classList.toggle('met',  /[A-Z]/.test(val));
+        reqNumber.classList.toggle('met', /[0-9]/.test(val));
+    });
 </script>
