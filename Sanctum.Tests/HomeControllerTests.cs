@@ -118,9 +118,10 @@ public class HomeControllerTests
         await using var db = NewDb();
         db.Users.Add(new User
         {
+            Email = "alice@x.com",
             Username = "alice@x.com",
             First = "A", Last = "A",
-            Password = "correct-horse",
+            Password = BCrypt.Net.BCrypt.HashPassword("correct-horse"),
             Description = "", CSULBID = ""
         });
         db.SaveChanges();
@@ -141,9 +142,10 @@ public class HomeControllerTests
         await using var db = NewDb();
         db.Users.Add(new User
         {
+            Email = "alice@x.com",
             Username = "alice@x.com",
             First = "A", Last = "A",
-            Password = "correct-horse",
+            Password = BCrypt.Net.BCrypt.HashPassword("correct-horse"),
             Description = "", CSULBID = ""
         });
         db.SaveChanges();

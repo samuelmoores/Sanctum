@@ -25,6 +25,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
@@ -40,8 +41,13 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    context.Database.Migrate(); // Ensure migrations are applied
+    if (context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+    {
+        context.Database.Migrate(); // Ensure migrations are applied
+    }
     SeedData.Initialize(context);
 }
 
 app.Run();
+
+public partial class Program;

@@ -30,17 +30,18 @@ public class RoomController : Controller
         //   Groups all room records by their Building column value,
         //   e.g. all "ECS" rooms together, all "LIB" rooms together, etc.
         //
-        // .ToDictionaryAsync(...)
+        // .ToDictionary(...)
         //   Converts the grouped results into a Dictionary<string, List<string>>
         //   where the key is the building name and the value is a list of
         //   room names belonging to that building.
         //
         //   g.Key         → the building name (e.g. "ECS")
         //   g.Select(...) → projects each room in the group to just its RoomName
-        //   .ToList()     → materializes the selection into a List<string>
-        var rooms = await _context.Rooms
+        //   * had to change this because the new tests couldn't run against the EF
+        //   Core InMemory provider, but the functionality is the same
+        var rooms = (await _context.Rooms.ToListAsync())
             .GroupBy(r => r.Building)
-            .ToDictionaryAsync(g => g.Key, g => g.Select(r => r.RoomName).ToList());
+            .ToDictionary(g => g.Key, g => g.Select(r => r.RoomName).ToList());
 
         // Json() serializes the rooms dictionary into a JSON response and
         // sets the Content-Type header to application/json. This is what

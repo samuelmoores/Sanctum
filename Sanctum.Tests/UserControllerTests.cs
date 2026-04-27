@@ -51,6 +51,7 @@ public class UserControllerTests
 
     private static User NewUser(string username, string password = "p") => new()
     {
+        Email = username,
         Username = username,
         First = "F", Last = "L",
         Password = password,

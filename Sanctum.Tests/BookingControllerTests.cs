@@ -71,8 +71,8 @@ public class BookingControllerTests
         using var db = NewDb();
 
         // Arrange: two separate users, and a booking owned by Bob.
-        var alice = new User { Username = "alice@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
-        var bob   = new User { Username = "bob@x.com",   First = "B", Last = "B", Password = "p", Description = "", CSULBID = "" };
+        var alice = new User { Email = "alice@x.com", Username = "alice@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
+        var bob   = new User { Email = "bob@x.com",   Username = "bob@x.com",   First = "B", Last = "B", Password = "p", Description = "", CSULBID = "" };
         db.Users.AddRange(alice, bob);
         db.SaveChanges();
 
@@ -103,7 +103,7 @@ public class BookingControllerTests
         using var db = NewDb();
 
         // Arrange: Alice exists and owns a booking.
-        var alice = new User { Username = "alice@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
+        var alice = new User { Email = "alice@x.com", Username = "alice@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
         db.Users.Add(alice);
         db.SaveChanges();
 
@@ -137,7 +137,7 @@ public class BookingControllerTests
         using var db = NewDb();
 
         // Arrange: same room number in two different buildings, both booked at different times.
-        var alice = new User { Username = "a@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
+        var alice = new User { Email = "a@x.com", Username = "a@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
         db.Users.Add(alice);
         db.SaveChanges();
 
@@ -161,7 +161,7 @@ public class BookingControllerTests
         using var db = NewDb();
 
         // Arrange: same building, two different rooms, both booked at different times.
-        var alice = new User { Username = "a@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
+        var alice = new User { Email = "a@x.com", Username = "a@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
         db.Users.Add(alice);
         db.SaveChanges();
 
@@ -185,7 +185,7 @@ public class BookingControllerTests
         using var db = NewDb();
 
         // Arrange: same room, one booking today and one tomorrow.
-        var alice = new User { Username = "a@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
+        var alice = new User { Email = "a@x.com", Username = "a@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
         db.Users.Add(alice);
         db.SaveChanges();
 
@@ -241,7 +241,7 @@ public class BookingControllerTests
         using var db = NewDb();
 
         // Arrange: a booking at 2:00 PM local time.
-        var alice = new User { Username = "a@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
+        var alice = new User { Email = "a@x.com", Username = "a@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
         db.Users.Add(alice);
         db.SaveChanges();
 
@@ -266,8 +266,8 @@ public class BookingControllerTests
         using var db = NewDb();
 
         // Arrange: two users; Bob already holds Library 101 on 2026-04-18 at 2 PM.
-        var alice = new User { Username = "alice@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
-        var bob   = new User { Username = "bob@x.com",   First = "B", Last = "B", Password = "p", Description = "", CSULBID = "" };
+        var alice = new User { Email = "alice@x.com", Username = "alice@x.com", First = "A", Last = "A", Password = "p", Description = "", CSULBID = "" };
+        var bob   = new User { Email = "bob@x.com",   Username = "bob@x.com",   First = "B", Last = "B", Password = "p", Description = "", CSULBID = "" };
         db.Users.AddRange(alice, bob);
         db.SaveChanges();
 

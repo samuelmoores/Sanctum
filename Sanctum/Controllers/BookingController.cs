@@ -46,6 +46,18 @@ namespace Sanctum.Controllers
 
             startTime = DateTime.SpecifyKind(startTime, DateTimeKind.Local).ToUniversalTime();
             DateTime endTime = startTime.AddHours(1);
+            
+            // checking if the slot is already booked
+            var description = $"{building}|{room}";
+            var alreadyBooked = _db.Bookings.Any(b =>
+                b.Description == description &&
+                b.StartTime < endTime &&
+                b.EndTime > startTime);
+
+            if (alreadyBooked)
+            {
+                return Json(new { success = false, message = "That time slot is already booked." });
+            }
 
             // Create a new booking and save it to the database
             var booking = new Booking
@@ -53,7 +65,7 @@ namespace Sanctum.Controllers
                 UserID = user.Id,
                 StartTime = startTime,
                 EndTime = endTime,
-                Description = $"{building}|{room}" // Store building and room separated by pipe
+                Description = description
             };
 
             _db.Bookings.Add(booking);
