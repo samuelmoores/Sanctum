@@ -1,5 +1,7 @@
 <Solution>
-  <Project Path="Sanctum.SystemTests/Sanctum.SystemTests.csproj" />
+  <Project Path="Sanctum.SystemTests/Sanctum.SystemTests.csproj">
+    <Build Solution="Debug|*" Project="false" />
+  </Project>
   <Project Path="Sanctum.Tests/Sanctum.Tests.csproj" />
   <Project Path="Sanctum/Sanctum.csproj" />
 </Solution>
